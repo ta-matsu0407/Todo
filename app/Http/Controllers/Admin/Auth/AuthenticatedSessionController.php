@@ -32,9 +32,9 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $request->session()->regenerate(); //セッション情報を再発行
 
-        Log::debug('admin:', $request->session()->all()); //デバック:セッション情報を全て確認
+        // Log::debug('admin:', $request->session()->all()); //デバック:セッション情報を全て確認
 
         return redirect()->intended(route('admin.dashboard', absolute: false));
     }
@@ -44,7 +44,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('admin')->logout();
+
+        // デバッグ用のコード
+        // dd([
+        //     'current_guard' => Auth::getDefaultDriver(), // 現在使用されているデフォルトのガード名
+        //     'guards_config' => config('auth.guards'),   // 設定されている全てのガード
+        //     'admins_guard_check' => Auth::guard('admins')->check(), // admins ガードが機能しているか
+        //     'current_user' => Auth::guard('admins')->user(), // admins ガードで認証されたユーザー情報
+        // ]);
+
+        Auth::guard('admins')->logout();
 
         $request->session()->invalidate();
 

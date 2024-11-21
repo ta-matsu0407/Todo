@@ -14,17 +14,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function(){
             Route::middleware('web')
-            ->prefix('admin')->name('admin.')
+            ->prefix('admin')
+            ->name('admin.')
             ->group(__DIR__ . '/../routes/admin.php');
-            }
+        }
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo(function(Request $request){
             if(request()->routeIs('admin*')){
                 return $request->expectsJson() ? null : route('admin.login');
-                }
+            }
                 return $request->expectsJson() ? null : route('login');
-                });
+        });
+
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
