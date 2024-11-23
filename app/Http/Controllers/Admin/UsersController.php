@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class UsersController extends Controller implements HasMiddleware
 {
@@ -26,10 +28,13 @@ class UsersController extends Controller implements HasMiddleware
     }
 
     public function index()
-    {
-        dd('ユーザー一覧');
-    }
+{
+    Log::info('デバッグ中: リクエストを受信しました');
 
+    return Inertia::render('DebugPage', [
+        'message' => 'デバッグ中',
+    ]);
+}
     /**
      * Show the form for creating a new resource.
      */

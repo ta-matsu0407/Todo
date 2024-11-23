@@ -20,12 +20,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // userから始まるURL
+        if (request()->is('user*')) {
+            config(['session.cookie' => config('session.cookie_user')]);
+        }
+        // adminから始まるURL
         if (request()->is('admin*')) {
-            // 管理画面用のセッションクッキーを設定
             config(['session.cookie' => config('session.cookie_admin')]);
-        } else {
-            // 一般ユーザー用のセッションクッキーを設定
-            config(['session.cookie' => config('session.cookie')]);
         }
     }
 }

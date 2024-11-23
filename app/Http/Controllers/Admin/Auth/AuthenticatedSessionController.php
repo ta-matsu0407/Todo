@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate(); //セッション情報を再発行
 
-        // Log::debug('admin:', $request->session()->all()); //デバック:セッション情報を全て確認
+        //Log::debug('admin:', $request->session()->all()); //デバック:セッション情報を全て確認
 
         return redirect()->intended(route('admin.dashboard', absolute: false));
     }
