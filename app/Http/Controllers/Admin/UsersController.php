@@ -8,14 +8,17 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use App\Models\User; //Eloquent
+use Illuminate\Support\Facades\DB; //QueryBuilder
+use Carbon\Carbon;
 
-class UsersController extends Controller implements HasMiddleware
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
 
-    //  public function __construct()
+    // public function __construct()
     // {
     //     $this->middleware('auth:admins');
     // }
@@ -29,11 +32,21 @@ class UsersController extends Controller implements HasMiddleware
 
     public function index()
 {
-    Log::info('デバッグ中: リクエストを受信しました');
 
-    return Inertia::render('DebugPage', [
-        'message' => 'デバッグ中',
+    return Inertia::render('Admin/Users/Index', [
+        'users' =>User::select('id', 'name', 'email')
+        ->get()
+        //selectを使う場合は、getが必要。getでデータの内容が確定する。
+
+        //User::all()
+        //第二引数で連想配列で渡す。変数は複数形で。モデル名::allでテーブル全てのデータを取得。→取得するデータをselectで絞った方が良い。
     ]);
+
+    // Log::info('デバッグ中: リクエストを受信しました');
+
+    // return Inertia::render('DebugPage', [
+    //     'message' => 'デバッグ中',
+    // ]);
 }
     /**
      * Show the form for creating a new resource.
