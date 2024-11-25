@@ -34,7 +34,7 @@ class UsersController extends Controller
 {
 
     return Inertia::render('Admin/Users/Index', [
-        'users' =>User::select('id', 'name', 'email')
+        'users' =>User::select('id', 'name', 'memo','status')
         ->get()
         //selectを使う場合は、getが必要。getでデータの内容が確定する。
 

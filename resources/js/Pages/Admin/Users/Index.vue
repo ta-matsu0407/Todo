@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="ユーザー一覧" />
 
     <adminAuthenticatedLayout>
         <template #header>
@@ -38,8 +38,8 @@ defineProps({
           <tr>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">ID</th>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">名前</th>
-            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">メールアドレス</th>
-            <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">aaaa</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">メモ</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">ステータス</th>
           </tr>
         </thead>
         <tbody>
@@ -47,9 +47,11 @@ defineProps({
                 <!-- 単数形 in 複数形 :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.id }}</td>
                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.name }}</td>
-                <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.email }}</td>
-                <td class="border-b-2 border-gray-200 w-10 text-center">
-                <input name="plan" type="radio">
+                <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.memo }}</td>
+                <td class="border-b-2 border-gray-200 px-4 py-3">
+                    <span v-if="user.status === 1">実施中</span>
+                    <span v-if="user.status === 0">完了</span>
+                    <!-- v-if:条件によって表示を変える -->
                 </td>
           </tr>
 

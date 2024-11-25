@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 
 Route::resource('users', UsersController::class)
-->middleware('auth:admins');
+->middleware('auth:admins', 'verified');
+//auth:admins + verified：管理者でログインし、かつメールアドレスが確認済みの場合のみアクセス可能
 
 Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
