@@ -76,7 +76,12 @@ class UsersController extends Controller
             'memo' => $request->memo,
         ]);
 
-        return to_route('admin.users.index');
+        return to_route('admin.users.index')
+        ->with([
+            'message' => '登録しました。',
+            'status' => 'success'
+        ]);
+        // リダイレクト処理に続けて、->withでフラッシュメッセージ
     }
 
     /**

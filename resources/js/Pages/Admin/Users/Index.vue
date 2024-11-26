@@ -1,7 +1,7 @@
 <script setup>
+import FlashMessage from '@/Components/FlashMessage.vue';
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-
 defineProps({
     users: Array
 })
@@ -25,6 +25,7 @@ defineProps({
                         <section class="text-gray-600 body-font">
                             <div class="container px-5 py-8 mx-auto">
                                 <!-- py：上下方向のパディング -->
+                                <FlashMessage />
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
                                     <Link as="button" :href="route('admin.users.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">ユーザー登録</Link>
                                     <!-- Linkのみだとaタグになるが、Link as="button"とするとbuttonタグ -->                                </div>
