@@ -3,6 +3,7 @@ import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
 import { router as Inertia } from '@inertiajs/core';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
 defineProps({
     errors: Object
@@ -37,6 +38,8 @@ Inertia.post('/admin/users', form)
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
+                            <!-- <BreezeValidationErrors :errors="errors" /> -->
+                             <!-- ↑これはどんな時に？？ -->
                             <form @submit.prevent="storeUser">
                                 <!-- sectionタグを目印にformタグ -->
                                 <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
@@ -49,18 +52,21 @@ Inertia.post('/admin/users', form)
                                                     <label for="name" class="leading-7 text-sm text-gray-600">氏名</label>
                                                     <input type="text" id="name" name="name" v-model="form.name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <!-- v-model:リアクティブに -->
+                                                    <div v-if="errors.name">{{ errors.name }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="email" class="leading-7 text-sm text-gray-600">メールアドレス</label>
                                                     <input type="email" id="email" name="email" v-model="form.email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.email">{{ errors.email }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
                                                     <input type="password" id="password" name="password" v-model="form.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.password">{{ errors.password }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
