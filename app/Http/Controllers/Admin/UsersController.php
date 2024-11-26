@@ -11,6 +11,7 @@ use Inertia\Inertia;
 use App\Models\User; //Eloquent
 use Illuminate\Support\Facades\DB; //QueryBuilder
 use Carbon\Carbon;
+use App\Http\Requests\StoreUserRequest;
 
 class UsersController extends Controller
 {
@@ -53,15 +54,22 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Users/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'memo' => $request->memo,
+        ]);
+
+        return to_route('admin.users.index');
     }
 
     /**
