@@ -42,7 +42,10 @@ defineProps({
                                         <tbody>
                                             <tr v-for="user in users" :key="user.id">
                                                 <!-- 単数形 in 複数形 :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.id }}</td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    <Link class="text-blue-400" :href="route('admin.users.show', { user: user.id})">
+                                                        {{ user.id }}</Link>
+                                                </td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.name }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.memo }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
