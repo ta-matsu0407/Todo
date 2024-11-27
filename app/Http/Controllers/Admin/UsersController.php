@@ -35,9 +35,15 @@ class UsersController extends Controller
     public function index()
 {
 
+    // $getTest = User::select('id', 'name', 'memo','status')->get();
+    // $getPaginateTest = User::select('id', 'name', 'memo','status')->paginate(10);
+    // vue側に受け渡す型が異なる、propsでの受け取り方に注意
+
+    // dd($getTest, $getPaginateTest);
+
     return Inertia::render('Admin/Users/Index', [
         'users' =>User::select('id', 'name', 'memo','status')
-        ->get()
+        ->paginate(10)
         //selectを使う場合は、getが必要。getでデータの内容が確定する。
 
         //User::all()

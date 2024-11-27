@@ -2,8 +2,10 @@
 import FlashMessage from '@/Components/FlashMessage.vue';
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import Pagination from '@/Components/Pagination.vue'
+
 defineProps({
-    users: Array
+    users: Object
 })
 //配列で変数の受け取り
 
@@ -40,7 +42,7 @@ defineProps({
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="user in users" :key="user.id">
+                                            <tr v-for="user in users.data" :key="user.id">
                                                 <!-- 単数形 in 複数形 :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400" :href="route('admin.users.show', { user: user.id})">
@@ -58,6 +60,7 @@ defineProps({
                                     </table>
                                 </div>
                             </div>
+                            <Pagination class="mt-6" :links="users.links"></Pagination>
                         </section>
                         </div>
                     </div>
