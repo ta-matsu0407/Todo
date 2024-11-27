@@ -23,10 +23,22 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $tel = str_replace('-', '', fake()->phoneNumber());
+        $address = mb_substr(fake()->address(), 9);
+        // 電話番号-> ハイフンを削除
+        // 住所-> 郵便番号と半角スペースをカット,何文字目から使用するか
+        // phpの関数、php.netで検索
+
         return [
             'name' => fake()->name(),
+            'kana' => fake()->kanaName(),
+            'tel' => $tel,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'postcode' => fake()->postcode(),
+            'address' => $address,
+            'birthday' => fake()->dateTime(),
+            'gender' => fake()->numberBetween(0, 2),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'memo' => fake()->realText(50),
