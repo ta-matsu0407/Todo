@@ -1,6 +1,6 @@
 <script setup>
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
     user: Object
@@ -23,7 +23,6 @@ defineProps({
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
-                            <form @submit.prevent="storeUser">
                                 <div class="container px-5 py-8 mx-auto">
                                     <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                         <div class="flex flex-wrap -m-2">
@@ -63,12 +62,12 @@ defineProps({
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
-                                                <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
+                                                <Link as="button" :href="route('admin.users.edit', { user: user.id})" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集する</Link>
+                                                <!-- Linkのみだとaタグ、as="button"つけてボタンに -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
                         </section>
                     </div>
                 </div>
