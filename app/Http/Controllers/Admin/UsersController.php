@@ -32,7 +32,7 @@ class UsersController extends Controller
         ];
     }
 
-    public function index()
+    public function index(Request $request)
 {
 
     // $getTest = User::select('id', 'name', 'memo','status')->get();
@@ -41,9 +41,14 @@ class UsersController extends Controller
 
     // dd($getTest, $getPaginateTest);
 
+    $users = User::searchUsers($request->search)
+    ->select('id', 'name', 'memo','status')
+    ->paginate(10);
+
+    // dd($users);
+
     return Inertia::render('Admin/Users/Index', [
-        'users' =>User::select('id', 'name', 'memo','status')
-        ->paginate(10)
+        'users' => $users
         //selectを使う場合は、getが必要。getでデータの内容が確定する。
 
         //User::all()

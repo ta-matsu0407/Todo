@@ -47,4 +47,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function scopeSearchUsers($query, $input = null)
+    {
+        if(!empty($input)){
+            if(User::where('kana', 'like', $input . '%' )
+            ->orWhere('tel', 'like', $input . '%')->exists())
+            {
+                return $query->where('kana', 'like', $input . '%' )
+                ->orWhere('tel', 'like', $input . '%');
+            }
+        }
+    }
 }

@@ -3,11 +3,20 @@ import FlashMessage from '@/Components/FlashMessage.vue';
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
+import { ref } from 'vue'
+import { router as Inertia } from '@inertiajs/core';
+
 
 defineProps({
     users: Object
 })
-//配列で変数の受け取り
+
+const search = ref('')
+
+// ref の値を取得するには .valueが必要
+const searchUsers = () => {
+Inertia.get(route('admin.users.index', { search: search.value }))
+}
 
 </script>
 
@@ -29,6 +38,10 @@ defineProps({
                                 <!-- py：上下方向のパディング -->
                                 <FlashMessage />
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
+                                    <div>
+                                        <input type="text" name="search" v-model="search">
+                                        <button class="bg-blue-300 text-white py-2 px-2" @click="searchUsers">検索</button>
+                                    </div>
                                     <Link as="button" :href="route('admin.users.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">ユーザー登録</Link>
                                     <!-- Linkのみだとaタグになるが、Link as="button"とするとbuttonタグ -->                                </div>
                                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
