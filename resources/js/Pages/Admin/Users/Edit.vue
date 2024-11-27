@@ -19,9 +19,10 @@ const form = reactive({
     status: props.user.status,
 })
 
-const storeUser = () => {
-Inertia.post('/admin/users', form)
+const updateUser = id => {
+Inertia.put(route('admin.users.update', { user: id}), form)
 }
+//route:listをみると、updateはPUTとある
 
 </script>
 
@@ -40,12 +41,11 @@ Inertia.post('/admin/users', form)
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
-                            <!-- <BreezeValidationErrors :errors="errors" /> -->
-                             <!-- ↑これはどんな時に？？ -->
-                            <form @submit.prevent="storeUser">
+                            <form @submit.prevent="updateUser(form.id)">
+                                <!-- 更新ボタンを押したらsubmitが走り、formが走り、updateUserメソッドが走る -->
                                 <!-- sectionタグを目印にformタグ -->
                                 <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
-                                <!-- storeUser：scriptで設定したメソッドを実行 -->
+                                <!-- updateUser：scriptで設定したメソッドを実行 -->
                                 <div class="container px-5 py-8 mx-auto">
                                     <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                         <div class="flex flex-wrap -m-2">
@@ -79,7 +79,6 @@ Inertia.post('/admin/users', form)
                                                     <label class="ml-2 mr-10">実施中</label>
                                                     <input type="radio" id="status" name="status" v-model="status" value="0" >
                                                     <label class="ml-2 mr-10">完了</label>
-                                                    <div v-if="errors.password">{{ errors.password }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -90,7 +89,7 @@ Inertia.post('/admin/users', form)
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
-                                                <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
+                                                <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                                             </div>
                                         </div>
                                     </div>

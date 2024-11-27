@@ -12,6 +12,7 @@ use App\Models\User; //Eloquent
 use Illuminate\Support\Facades\DB; //QueryBuilder
 use Carbon\Carbon;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UsersController extends Controller
 {
@@ -108,9 +109,29 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required'],
+            'password' => ['required'],
+        ]);
+
+        // dd($user->name, $request->name);
+        // $user->name...現在の情報
+        // $request->name...新しい情報
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->memo = $request->memo;
+        $user->save();
+
+        return to_route('admin.users.index')
+        ->with([
+            'message' => '更新しました。',
+            'status' => 'success'
+        ]);
     }
 
     /**
