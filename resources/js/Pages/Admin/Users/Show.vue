@@ -1,11 +1,18 @@
 <script setup>
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { router as Inertia } from '@inertiajs/core';
+
 
 defineProps({
     user: Object
 })
 
+const deleteUser = id => {
+    Inertia.delete(route('admin.users.destroy', {user: id}), {
+    onBefore: () => confirm('本当に削除しますか?')
+    })
+}
 </script>
 
 <template>
@@ -64,6 +71,9 @@ defineProps({
                                             <div class="p-2 w-full">
                                                 <Link as="button" :href="route('admin.users.edit', { user: user.id})" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集する</Link>
                                                 <!-- Linkのみだとaタグ、as="button"つけてボタンに -->
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <button @click="deleteUser(user.id)" class="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除する</button>
                                             </div>
                                         </div>
                                     </div>
