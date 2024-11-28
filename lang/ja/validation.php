@@ -154,13 +154,17 @@ return [
     */
 
     'attributes' => [
-      'password' => 'パスワード',
-      'name' => '氏名',
-      'title' => '件名',
-      'gender' => '性別',
-      'age' => '年齢',
-      'contact' => 'お問い合わせ内容',
-      'caution' => '注意事項'
+        'password' => 'パスワード',
+        'name' => '氏名',
+        'title' => '件名',
+        'gender' => '性別',
+        'age' => '年齢',
+        'kana' => 'カナ',
+        'tel' => '電話番号',
+        'email' => 'メールアドレス',
+        'postcode' => '郵便番号',
+        'address' => '住所',
+        'birthday' => '誕生日',
     ],
 
 ];

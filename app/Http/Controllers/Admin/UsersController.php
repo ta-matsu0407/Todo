@@ -76,14 +76,27 @@ class UsersController extends Controller
     {
 
         $request->validate([
-            'name' => ['required'],
-            'email' => ['required'],
+            'name' => ['required', 'max:50'],
+            'kana' => ['required', 'regex:/^[ァ-ヾ]+$/u','max:50'],
+            'tel' => ['required', 'max:20', 'unique:users,tel'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'postcode' => ['required', 'max:7'],
+            'address' => ['required', 'max:100'],
+            'birthday' => ['date'],
+            'gender' => ['required'],
             'password' => ['required'],
+            'memo' => ['max:1000'],
         ]);
 
         User::create([
             'name' => $request->name,
+            'kana' => $request->kana,
+            'tel' => $request->tel,
             'email' => $request->email,
+            'postcode' => $request->postcode,
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
             'password' => $request->password,
             'memo' => $request->memo,
         ]);
