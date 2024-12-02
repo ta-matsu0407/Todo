@@ -9,10 +9,12 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use App\Models\User; //Eloquent
+use App\Models\Todo;
 use Illuminate\Support\Facades\DB; //QueryBuilder
 use Carbon\Carbon;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Throwable;
 
 class UsersController extends Controller
 {
@@ -88,18 +90,33 @@ class UsersController extends Controller
             'memo' => ['max:1000'],
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'kana' => $request->kana,
-            'tel' => $request->tel,
-            'email' => $request->email,
-            'postcode' => $request->postcode,
-            'address' => $request->address,
-            'birthday' => $request->birthday,
-            'gender' => $request->gender,
-            'password' => $request->password,
-            'memo' => $request->memo,
-        ]);
+        try{
+            DB::transaction(function() use($request) {
+                $user = User::create([
+                    'name' => $request->name,
+                    'kana' => $request->kana,
+                    'tel' => $request->tel,
+                    'email' => $request->email,
+                    'postcode' => $request->postcode,
+                    'address' => $request->address,
+                    'birthday' => $request->birthday,
+                    'gender' => $request->gender,
+                    'password' => $request->password,
+                    'memo' => $request->memo,
+                ]);
+
+                Todo::create([
+                    'user_id' => $user->id,
+                    'title' => 'タイトルを入力して下さい。',
+                    'memo' => '',
+                    'status' => '1',
+                    'due_date' => '2000/2/22',
+                ]);
+            }, 1);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
 
         return to_route('admin.users.index')
         ->with([

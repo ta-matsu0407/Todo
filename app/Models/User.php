@@ -69,6 +69,8 @@ class User extends Authenticatable
 
     public function todo()
     {
-        return $this->hasOne(Todo::class);
+        return $this->hasMany(Todo::class);
+        // hasOne：１対１
+        // hasMany：１対多
     }
 }

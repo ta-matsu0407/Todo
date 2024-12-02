@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()
+            ->constrained()->onUpdate('cascade');
             $table->string('title');
             $table->string('memo');
             $table->integer('status')->default('1');
