@@ -48,10 +48,11 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                     <table class="table-auto w-full text-left whitespace-no-wrap">
                                         <thead>
                                             <tr>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">ID</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">名前</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">メモ</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">ステータス</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/10">ID</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/5">名前</th>
+                                                <!-- w-1/5で、列全体の幅の1/5を名前列に割り当て -->
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-2/3">やること</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/6">状況</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -64,8 +65,10 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.name }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.memo }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    <span v-if="user.status === 1">実施中</span>
-                                                    <span v-if="user.status === 0">完了</span>
+                                                    <span v-if="user.status === 1" class="flex items-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
+                                                    <span v-if="user.status === 0" class="flex items-center justify-center text-red-700 bg-red-100 rounded-lg p-2 text-center">完了</span>
+                                                    <!-- justify-center:Flexboxの横方向（左右）の配置を中央に
+                                                    items-center:Flexboxの縦方向（上下）の配置を中央に -->
                                                     <!-- v-if:条件によって表示を変える -->
                                                 </td>
                                             </tr>

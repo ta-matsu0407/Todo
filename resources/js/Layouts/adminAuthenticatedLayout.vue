@@ -37,7 +37,7 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('admin.dashboard')"
                                     :active="route().current('admin.dashboard')"
                                 >
-                                    Admin Dashboard
+                                    管理者用ダッシュボード
                                 </NavLink>
                                 <NavLink
                                     :href="route('admin.users.index')"
@@ -80,14 +80,14 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink
                                             :href="route('admin.profile.edit')"
                                         >
-                                            Profile
+                                            プロフィール
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('admin.logout')"
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            ログアウト
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -150,7 +150,7 @@ const showingNavigationDropdown = ref(false);
                             :href="route('admin.dashboard')"
                             :active="route().current('admin.dashboard')"
                         >
-                            Dashboard
+                        管理者用ダッシュボード
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.users.index')"
@@ -177,14 +177,14 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('admin.profile.edit')">
-                                Profile
+                                プロフィール
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('admin.logout')"
                                 method="post"
                                 as="button"
                             >
-                                Log Out
+                                ログアウト
                             </ResponsiveNavLink>
                         </div>
                     </div>

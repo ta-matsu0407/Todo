@@ -166,6 +166,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->memo = $request->memo;
+        $user->status = $request->status;
         $user->save();
 
         return to_route('admin.users.index')

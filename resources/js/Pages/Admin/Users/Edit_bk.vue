@@ -73,19 +73,12 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="status" class="leading-7 text-sm text-gray-800">状況</label>
-                                                    <!-- <input type="radio" id="status" name="status" v-model="form.status" value="1" > -->
-                                                    <!-- v-model="form.status"として、form オブジェクトの status プロパティにバインド -->
+                                                    <label for="status" class="leading-7 text-sm text-gray-600">ステータス</label>
+                                                    <input type="radio" id="status" name="status" v-model="status" value="1" >
                                                     <!-- value="1":statusが1の時にチェックが入る -->
-                                                    <select
-                                                        id="status"
-                                                        name="status"
-                                                        v-model="form.status"
-                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                    >
-                                                        <option value="1" >実施中</option>
-                                                        <option value="0">完了</option>
-                                                    </select>
+                                                    <label class="ml-2 mr-10">実施中</label>
+                                                    <input type="radio" id="status" name="status" v-model="status" value="0" >
+                                                    <label class="ml-2 mr-10">完了</label>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
