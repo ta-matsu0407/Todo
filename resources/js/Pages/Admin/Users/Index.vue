@@ -38,9 +38,11 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                 <!-- py：上下方向のパディング -->
                                 <FlashMessage />
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
-                                    <div>
-                                        <input type="text" name="search" v-model="search">
-                                        <button class="bg-blue-300 text-white py-2 px-2" @click="searchUsers">検索</button>
+                                    <div class="flex items-center space-x-2">
+                                        <input type="text" name="search" v-model="search" placeholder="検索キーワードを入力" class="flex-1 bg-gray-100 border border-gray-300 rounded px-4 py-2 text-gray-700">
+                                        <button class="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 " @click="searchUsers">
+                                            検索
+                                        </button>
                                     </div>
                                     <Link as="button" :href="route('admin.users.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">ユーザー登録</Link>
                                     <!-- Linkのみだとaタグになるが、Link as="button"とするとbuttonタグ -->                                </div>
