@@ -23,7 +23,7 @@ const deleteUser = id => {
     <adminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                ユーザー詳細
+                {{ user.name }} さんの詳細画面
             </h2>
         </template>
 
@@ -62,7 +62,7 @@ const deleteUser = id => {
                                             </div> -->
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">メモ</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やるとこ</label>
                                                     <div id="memo" style="white-space: pre-wrap;" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">
                                                         <!-- style="white-space: pre-wrap;":改行がそのまま表示される -->
                                                         {{ user.memo }}
@@ -71,10 +71,10 @@ const deleteUser = id => {
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="status" class="leading-7 text-sm text-gray-600">ステータス</label>
+                                                    <label for="status" class="leading-7 text-sm text-gray-600">状況</label>
                                                     <div id="status" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        <span v-if="user.status === 1">実施中</span>
-                                                        <span v-if="user.status === 0">完了</span>
+                                                        <span v-if="user.status === 1" class="flex items-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
+                                                        <span v-if="user.status === 0" class="flex items-center text-red-700 bg-red-100 rounded-lg p-2">完了</span>
                                                     </div>
                                                 </div>
                                             </div>

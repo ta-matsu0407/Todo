@@ -1,7 +1,7 @@
 <script setup>
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { router as Inertia } from '@inertiajs/core';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Core as YubinBangoCore } from "yubinbango-core2";
@@ -21,6 +21,7 @@ const form = reactive({
     birthday: null,
     gender: null,
     password: null,
+    password_confirmation: null, // 確認用パスワードを追加
     memo: null,
 })
 
@@ -30,6 +31,8 @@ const fetchAddress = () => {
     form.address = value.region + value.locality + value.street
     })
 }
+
+const passwordsMatch = computed(() => form.password === form.password_confirmation);
 
 const storeUser = () => {
 Inertia.post('/admin/users', form)
@@ -130,6 +133,13 @@ Inertia.post('/admin/users', form)
                                                     <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
                                                     <input type="password" id="password" name="password" v-model="form.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.password">{{ errors.password }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="password_confirmation" class="leading-7 text-sm text-gray-600">パスワード（確認用）</label>
+                                                    <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="!passwordsMatch" class="text-red-500 text-sm">パスワードが一致しません。</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">

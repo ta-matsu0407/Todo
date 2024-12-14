@@ -1,7 +1,7 @@
 <script setup>
 import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive } from 'vue'
+import { reactive, computed} from 'vue'
 import { router as Inertia } from '@inertiajs/core';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
@@ -15,11 +15,18 @@ const form = reactive({
     name: props.user.name,
     email: props.user.email,
     password: "", //パスワードは空で初期化
+    password_confirmation: "", // 確認用パスワードを追加
     memo: props.user.memo,
     status: props.user.status,
 })
 
+const passwordsMatch = computed(() => form.password === form.password_confirmation);
+
 const updateUser = id => {
+    if (!passwordsMatch.value) {
+        alert("パスワードが一致しません。");
+        return;
+    }
 Inertia.put(route('admin.users.update', { user: id}), form)
 }
 //route:listをみると、updateはPUTとある
@@ -32,7 +39,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
     <adminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                ユーザー編集
+                {{ user.name }} さんの編集画面
             </h2>
         </template>
 
@@ -73,6 +80,13 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
+                                                    <label for="password_confirmation" class="leading-7 text-sm text-gray-600">パスワード（確認用）</label>
+                                                    <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="!passwordsMatch" class="text-red-500 text-sm">パスワードが一致しません。</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
                                                     <label for="status" class="leading-7 text-sm text-gray-800">状況</label>
                                                     <!-- <input type="radio" id="status" name="status" v-model="form.status" value="1" > -->
                                                     <!-- v-model="form.status"として、form オブジェクトの status プロパティにバインド -->
@@ -91,7 +105,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             <div class="p-2 w-full">
                                                 <!-- w-full:横幅いっぱい -->
                                                 <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">メモ</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                                                 </div>
                                             </div>
