@@ -12,11 +12,19 @@ defineProps({
 })
 
 const search = ref('')
+// フォームに入力された文字が入ってくる変数の作成
+// ref を使うと、JavaScript の変数にリアクティブな機能を追加
+//リアクティブとは、データが変わるとそれに紐づいた UI が自動的に更新される
 
-// ref の値を取得するには .valueが必要
+// ref で定義した変数の値にアクセスしたり更新する際には、.value が必要
 const searchUsers = () => {
 Inertia.get(route('admin.users.index', { search: search.value }))
 }
+// Inertia.get クライアント (ブラウザ) からサーバーへリクエストを送信
+// search パラメータを付けてリクエストを送信
+// 値を取得する → search.value
+// 値を更新する → search.value = '新しい値'
+// 第二引数の情報をcontrollerのindexメソッドに値を渡す
 
 </script>
 
@@ -39,7 +47,7 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                 <FlashMessage />
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
                                     <div class="flex items-center space-x-2">
-                                        <input type="text" name="search" v-model="search" placeholder="検索キーワードを入力" class="flex-1 bg-gray-100 border border-gray-300 rounded px-4 py-2 text-gray-700">
+                                        <input type="text" name="search" v-model="search" placeholder="カナ名・状況で検索" class="flex-1 bg-gray-100 border border-gray-300 rounded px-4 py-2 text-gray-700">
                                         <button class="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 " @click="searchUsers">
                                             検索
                                         </button>

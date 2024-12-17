@@ -82,6 +82,18 @@ Inertia.post('/admin/users', form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
+                                                    <label class="leading-7 text-sm text-gray-600">性別</label>
+                                                    <input type="radio" id="gender0" name="gender" v-model="form.gender" value="0" >
+                                                    <label for="gender0" class="ml-2 mr-10">男性</label>
+                                                    <!-- idとforを統一しておくと、文字をクリックしてチェックを入れることができる -->
+                                                    <input type="radio" id="gender1" name="gender" v-model="form.gender" value="1" >
+                                                    <label for="gender1" class="ml-2 mr-10">女性</label>
+                                                    <input type="radio" id="gender2" name="gender" v-model="form.gender" value="2" >
+                                                    <label for="gender2" class="ml-2 mr-10">その他</label>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
                                                     <label for="tel" class="leading-7 text-sm text-gray-600">電話番号</label>
                                                     <input type="tel" id="tel" name="tel" v-model="form.tel" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.tel">{{ errors.tel }}</div>
@@ -118,18 +130,6 @@ Inertia.post('/admin/users', form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label class="leading-7 text-sm text-gray-600">性別</label>
-                                                    <input type="radio" id="gender0" name="gender" v-model="form.gender" value="0" >
-                                                    <label for="gender0" class="ml-2 mr-10">男性</label>
-                                                    <!-- idとforを統一しておくと、文字をクリックしてチェックを入れることができる -->
-                                                    <input type="radio" id="gender1" name="gender" v-model="form.gender" value="1" >
-                                                    <label for="gender1" class="ml-2 mr-10">女性</label>
-                                                    <input type="radio" id="gender2" name="gender" v-model="form.gender" value="2" >
-                                                    <label for="gender2" class="ml-2 mr-10">その他</label>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
                                                     <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
                                                     <input type="password" id="password" name="password" v-model="form.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.password">{{ errors.password }}</div>
@@ -145,7 +145,7 @@ Inertia.post('/admin/users', form)
                                             <div class="p-2 w-full">
                                                 <!-- w-full:横幅いっぱい -->
                                                 <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">メモ</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                                                 </div>
                                             </div>

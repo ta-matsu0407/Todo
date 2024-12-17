@@ -56,15 +56,21 @@ class User extends Authenticatable
     }
 
     public function scopeSearchUsers($query, $input = null)
+    // 関数名の頭は"scope"、第一引数は"$query"、第二引数は入力された文字、
+    // controllerで、searchUsersとして使える
+
     {
-        if(!empty($input)){
-            if(User::where('kana', 'like', $input . '%' )
-            ->orWhere('tel', 'like', $input . '%')->exists())
-            {
-                return $query->where('kana', 'like', $input . '%' )
-                ->orWhere('tel', 'like', $input . '%');
+        if (!empty($input)) {
+            // 状況 (status) に該当する値で検索
+            if (in_array($input, ['実施', '完了'])) {
+                return $query->where('status', $input);
             }
+
+            // 状況に該当しない場合は kana で検索
+            return $query->where('kana', 'like', $input . '%');
         }
+
+        return $query; // 入力がない場合はそのまま返す
     }
 
     public function todo()

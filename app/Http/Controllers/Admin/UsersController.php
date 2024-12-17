@@ -35,6 +35,7 @@ class UsersController extends Controller
     }
 
     public function index(Request $request)
+    //　ビューから渡ってくる情報(フォームに入力した値)は、$requestで受け取れる
 {
 
     // $getTest = User::select('id', 'name', 'memo','status')->get();
@@ -44,6 +45,7 @@ class UsersController extends Controller
     // dd($getTest, $getPaginateTest);
 
     $users = User::searchUsers($request->search)
+    //ビュー側から渡ってきた変数searchを受け取る
     ->select('id', 'name', 'memo','status')
     ->paginate(10);
 
@@ -167,6 +169,12 @@ class UsersController extends Controller
         $user->password = $request->password;
         $user->memo = $request->memo;
         $user->status = $request->status;
+        $user->kana = $request->kana;
+        $user->tel = $request->tel;
+        $user->postcode = $request->postcode;
+        $user->address = $request->address;
+        $user->birthday = $request->birthday;
+        $user->gender = $request->gender;
         $user->save();
 
         return to_route('admin.users.index')

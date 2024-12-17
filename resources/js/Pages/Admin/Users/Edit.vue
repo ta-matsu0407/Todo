@@ -13,6 +13,12 @@ const props = defineProps({
 const form = reactive({
     id: props.user.id,
     name: props.user.name,
+    kana: props.user.kana,
+    tel: props.user.tel,
+    postcode: props.user.postcode,
+    address: props.user.address,
+    birthday: props.user.birthday,
+    gender: props.user.gender,
     email: props.user.email,
     password: "", //パスワードは空で初期化
     password_confirmation: "", // 確認用パスワードを追加
@@ -66,9 +72,55 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
+                                                    <label for="kana" class="leading-7 text-sm text-gray-600">カナ</label>
+                                                    <input type="kana" id="kana" name="kana" v-model="form.kana" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.kana">{{ errors.kana }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label class="leading-7 text-sm text-gray-600">性別</label>
+                                                    <input type="radio" id="gender0" name="gender" v-model="form.gender" value="0" >
+                                                    <label for="gender0" class="ml-2 mr-10">男性</label>
+                                                    <input type="radio" id="gender1" name="gender" v-model="form.gender" value="1" >
+                                                    <label for="gender1" class="ml-2 mr-10">女性</label>
+                                                    <input type="radio" id="gender2" name="gender" v-model="form.gender" value="2" >
+                                                    <label for="gender2" class="ml-2 mr-10">その他</label>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="tel" class="leading-7 text-sm text-gray-600">電話番号</label>
+                                                    <input type="tel" id="tel" name="tel" v-model="form.tel" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.tel">{{ errors.tel }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
                                                     <label for="email" class="leading-7 text-sm text-gray-600">メールアドレス</label>
                                                     <input type="email" id="email" name="email" v-model="form.email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.email">{{ errors.email }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="postcode" class="leading-7 text-sm text-gray-600">郵便番号</label>
+                                                    <input type="postcode" id="postcode" name="postcode" v-model="form.postcode" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.postcode">{{ errors.postcode }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="address" class="leading-7 text-sm text-gray-600">住所</label>
+                                                    <input type="address" id="address" name="address" v-model="form.address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.address">{{ errors.address }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="birthday" class="leading-7 text-sm text-gray-600">誕生日</label>
+                                                    <input type="birthday" id="birthday" name="birthday" v-model="form.birthday" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.birthday">{{ errors.birthday }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -83,6 +135,13 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                                     <label for="password_confirmation" class="leading-7 text-sm text-gray-600">パスワード（確認用）</label>
                                                     <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="!passwordsMatch" class="text-red-500 text-sm">パスワードが一致しません。</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <!-- w-full:横幅いっぱい -->
+                                                <div class="relative">
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
+                                                    <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -102,13 +161,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="p-2 w-full">
-                                                <!-- w-full:横幅いっぱい -->
-                                                <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
-                                                    <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
-                                                </div>
-                                            </div>
+
                                             <div class="p-2 w-full">
                                                 <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                                             </div>

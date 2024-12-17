@@ -46,12 +46,63 @@ const deleteUser = id => {
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
+                                                    <label for="kana" class="leading-7 text-sm text-gray-600">カナ</label>
+                                                    <div id="kana" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ user.kana }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="gender" class="leading-7 text-sm text-gray-600">性別</label>
+                                                    <div id="gender" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        <span v-if="user.gender === 0" >男性</span>
+                                                        <span v-if="user.gender === 1" >女性</span>
+                                                        <span v-if="user.gender === 2" >その他</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="tel" class="leading-7 text-sm text-gray-600">電話番号</label>
+                                                    <div id="tel" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ user.tel }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
                                                     <label for="email" class="leading-7 text-sm text-gray-600">メールアドレス</label>
                                                     <div id="email" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                         {{ user.email }}
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="postcode" class="leading-7 text-sm text-gray-600">郵便番号</label>
+                                                    <div id="postcode" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ user.postcode }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="address" class="leading-7 text-sm text-gray-600">住所</label>
+                                                    <div id="address" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ user.address }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 w-full">
+                                                <div class="relative">
+                                                    <label for="birthday" class="leading-7 text-sm text-gray-600">誕生日</label>
+                                                    <div id="birthday" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ user.birthday }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <!-- <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="title" class="leading-7 text-sm text-gray-600">タイトル</label>
