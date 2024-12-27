@@ -5,11 +5,13 @@ import { reactive, computed} from 'vue'
 import { router as Inertia } from '@inertiajs/core';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
+//コントローラから渡ってくる情報をdefinePropsで受けて、それを変数に入れておく
 const props = defineProps({
     user: Object,
     errors: Object
 })
 
+// 変数で渡したものをreactiveでリアクティブ対応にする
 const form = reactive({
     id: props.user.id,
     name: props.user.name,

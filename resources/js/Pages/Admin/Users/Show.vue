@@ -15,6 +15,7 @@ const deleteUser = id => {
     onBefore: () => confirm('本当に削除しますか?')
     })
 }
+// アロー関数で引数が１つの場合は()を省略できる
 </script>
 
 <template>

@@ -17,6 +17,7 @@ use Inertia\Inertia;
 
 Route::resource('users', UsersController::class)
 ->middleware('auth:admins', 'verified');
+//7つのリソースコントローラーをまとめて設定(nameも自動的に設定される)
 //auth:admins + verified：管理者でログインし、かつメールアドレスが確認済みの場合のみアクセス可能
 
 Route::get('/dashboard', function () {

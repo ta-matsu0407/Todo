@@ -54,8 +54,8 @@ class UsersController extends Controller
     return Inertia::render('Admin/Users/Index', [
         'users' => $users
         //selectを使う場合は、getが必要。getでデータの内容が確定する。
-
-        //User::all()
+        //'Admin/Users/Index' ←コンポーネント名
+        //'users' => User::all()
         //第二引数で連想配列で渡す。変数は複数形で。モデル名::allでテーブル全てのデータを取得。→取得するデータをselectで絞った方が良い。
     ]);
 
@@ -125,7 +125,7 @@ class UsersController extends Controller
             'message' => '登録しました。',
             'status' => 'success'
         ]);
-        // リダイレクト処理に続けて、->withでフラッシュメッセージ
+        // リダイレクト処理に続けて、->withでフラッシュメッセージを渡す
     }
 
     /**

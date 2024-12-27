@@ -10,11 +10,14 @@ import { router as Inertia } from '@inertiajs/core';
 defineProps({
     users: Object
 })
+// コントローラーから渡ってくる情報は、definePropsで受け取る
+// 複数形のオブジェクトを受け取る
+// ArrayではなくObjectで受け取れるのは？？
 
 const search = ref('')
 // フォームに入力された文字が入ってくる変数の作成
 // ref を使うと、JavaScript の変数にリアクティブな機能を追加
-//リアクティブとは、データが変わるとそれに紐づいた UI が自動的に更新される
+// リアクティブとは、データが変わるとそれに紐づいた UI が自動的に更新される
 
 // ref で定義した変数の値にアクセスしたり更新する際には、.value が必要
 const searchUsers = () => {
@@ -45,6 +48,7 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                             <div class="container px-5 py-8 mx-auto">
                                 <!-- py：上下方向のパディング -->
                                 <FlashMessage />
+                                <!-- importで読み込むことで、コンポーネントを使えるようにする -->
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
                                     <div class="flex items-center space-x-2">
                                         <input type="text" name="search" v-model="search" placeholder="カナ名・状況で検索" class="flex-1 bg-gray-100 border border-gray-300 rounded px-4 py-2 text-gray-700">
@@ -67,11 +71,15 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                         </thead>
                                         <tbody>
                                             <tr v-for="user in users.data" :key="user.id">
-                                                <!-- 単数形 in 複数形 :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
+                                                <!-- 単数形 in 複数形 -->
+                                                <!-- v-forを回すときは :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400" :href="route('admin.users.show', { user: user.id})">
                                                         {{ user.id }}</Link>
                                                 </td>
+                                                <!-- Linkコンポーネントで挟むことで、idをリンク化 -->
+                                                <!-- { user: user.id }：ルートパラメータに渡すデータ 例えば、user.id が 1 なら、/admin/users/1 というURLが生成 -->
+                                                <!-- ↑これはルートリスト情報を確認するとわかりやすい -->
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.name }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.memo }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
@@ -80,6 +88,7 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                                     <!-- justify-center:Flexboxの横方向（左右）の配置を中央に
                                                     items-center:Flexboxの縦方向（上下）の配置を中央に -->
                                                     <!-- v-if:条件によって表示を変える -->
+                                                    <!-- spanタグで、「インライン要素」をグルーピング -->
                                                 </td>
                                             </tr>
                                         </tbody>

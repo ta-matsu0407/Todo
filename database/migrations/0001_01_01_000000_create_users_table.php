@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('postcode');
             $table->string('address');
-            $table->date('birthday')->nulable();
+            $table->date('birthday')->nullable();
             $table->tinyInteger('gender'); // 0男性, 1女性、2その他
             $table->string('password');
             $table->rememberToken();

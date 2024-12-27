@@ -31,6 +31,8 @@ class User extends Authenticatable
         'memo',
         'status',
     ];
+    //コントローラ側 create() で保存できるように$fillableを設定
+    //複数代入の脆弱性から保護するために必要
 
     /**
      * The attributes that should be hidden for serialization.
