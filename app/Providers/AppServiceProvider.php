@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +11,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //コードを見たとき「このメソッドは何も返さない」と分かりやすくするために"void"を使用している
+
     }
 
     /**
@@ -20,11 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // userから始まるURL
         if (request()->is('user*')) {
             config(['session.cookie' => config('session.cookie_user')]);
         }
-        // adminから始まるURL
         if (request()->is('admin*')) {
             config(['session.cookie' => config('session.cookie_admin')]);
         }

@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
-use App\Models\User; //Eloquent
+use App\Models\User;
 use App\Models\Todo;
-use Illuminate\Support\Facades\DB; //QueryBuilder
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Throwable;
@@ -22,11 +19,6 @@ class UsersController extends Controller
      * Display a listing of the resource.
      */
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:admins');
-    // }
-
     public static function middleware(): array
     {
         return [
@@ -35,36 +27,16 @@ class UsersController extends Controller
     }
 
     public function index(Request $request)
-    //　ビューから渡ってくる情報(フォームに入力した値)は、$requestで受け取れる
-{
+    {
+        $users = User::searchUsers($request->search)
+        ->select('id', 'name', 'memo','status')
+        ->paginate(10);
 
-    // $getTest = User::select('id', 'name', 'memo','status')->get();
-    // $getPaginateTest = User::select('id', 'name', 'memo','status')->paginate(10);
-    // vue側に受け渡す型が異なる、propsでの受け取り方に注意
+        return Inertia::render('Admin/Users/Index', [
+            'users' => $users
+        ]);
+    }
 
-    // dd($getTest, $getPaginateTest);
-
-    $users = User::searchUsers($request->search)
-    //ビュー側から渡ってきた変数searchを受け取る
-    ->select('id', 'name', 'memo','status')
-    ->paginate(10);
-
-    // dd($users);
-
-    return Inertia::render('Admin/Users/Index', [
-        'users' => $users
-        //selectを使う場合は、getが必要。getでデータの内容が確定する。
-        //'Admin/Users/Index' ←コンポーネント名
-        //'users' => User::all()
-        //第二引数で連想配列で渡す。変数は複数形で。モデル名::allでテーブル全てのデータを取得。→取得するデータをselectで絞った方が良い。
-    ]);
-
-    // Log::info('デバッグ中: リクエストを受信しました');
-
-    // return Inertia::render('DebugPage', [
-    //     'message' => 'デバッグ中',
-    // ]);
-}
     /**
      * Show the form for creating a new resource.
      */
@@ -125,7 +97,6 @@ class UsersController extends Controller
             'message' => '登録しました。',
             'status' => 'success'
         ]);
-        // リダイレクト処理に続けて、->withでフラッシュメッセージを渡す
     }
 
     /**
@@ -143,7 +114,6 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        // dd($user);
         return Inertia::render('Admin/Users/Edit', [
             'user' => $user
         ]);
@@ -159,10 +129,6 @@ class UsersController extends Controller
             'email' => ['required'],
             'password' => ['required'],
         ]);
-
-        // dd($user->name, $request->name);
-        // $user->name...現在の情報
-        // $request->name...新しい情報
 
         $user->name = $request->name;
         $user->email = $request->email;

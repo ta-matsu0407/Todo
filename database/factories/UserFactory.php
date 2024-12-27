@@ -25,9 +25,6 @@ class UserFactory extends Factory
     {
         $tel = str_replace('-', '', fake()->phoneNumber());
         $address = mb_substr(fake()->address(), 9);
-        // 電話番号-> ハイフンを削除
-        // 住所-> 郵便番号と半角スペースをカット,何文字目から使用するか
-        // phpの関数、php.netで検索
 
         return [
             'name' => fake()->name(),

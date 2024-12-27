@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 
@@ -12,7 +11,6 @@ class UserDashboardController extends Controller
 {
     public function index()
     {
-        // ログイン中のユーザー情報を取得
         $user = Auth::user();
 
         return Inertia::render('User/Dashboard', [
@@ -29,27 +27,15 @@ class UserDashboardController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        // dd($user, $request);
-
         $request->validate([
             'status' => ['required'],
             'memo' => ['required'],
         ]);
 
-        // dd($user->name, $request->name);
-        // $user->name...現在の情報
-        // $request->name...新しい情報
-
-        // $user->status = $request->status;
-        // $user->memo = $request->memo;
-        // $user->save();
-
         $user->update([
             'status' => $request->status,
             'memo' => $request->memo,
         ]);
-        // save()だと一括更新してしまう。
-        // 必須項目がblankになってしまうので、updateメソッドで更新項目を指定する。
 
         return to_route('dashboard')
         ->with([

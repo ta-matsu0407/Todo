@@ -36,7 +36,6 @@ class HandleInertiaRequests extends Middleware
             ],
             'flash' => [
                 'message' => fn() => $request->session()->get('message'),
-                //fn():部分リロード 関数を挟むと、必要な時だけ呼び出される
                 'status' => fn() => $request->session()->get('status')
 
             ]
