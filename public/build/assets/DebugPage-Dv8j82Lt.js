@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as r,f as a,b as s,t as n}from"./app-B_m04P03.js";const l={props:{message:String}};function p(c,e,t,i,f,m){return r(),a("div",null,[e[0]||(e[0]=s("h1",null,"デバッグページ",-1)),s("p",null,n(t.message),1)])}const d=o(l,[["render",p]]);export{d as default};
