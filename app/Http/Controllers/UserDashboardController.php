@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdateUserDashboardRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserDashboardController extends Controller
 {
@@ -22,19 +23,23 @@ class UserDashboardController extends Controller
 
     public function edit(User $user)
     {
+        if (Gate::denies('view', $user)) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return Inertia::render('User/Edit', [
             'user' => $user
         ]);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserDashboardRequest $request, User $user)
     {
         // dd($user, $request);
 
-        $request->validate([
-            'status' => ['required'],
-            'memo' => ['required'],
-        ]);
+        // $request->validate([
+        //     'status' => ['required'],
+        //     'memo' => ['required'],
+        // ]);
 
         // dd($user->name, $request->name);
         // $user->name...現在の情報

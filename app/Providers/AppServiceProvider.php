@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+// use App\Policies\UserPolicy;
+// use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,4 +31,8 @@ class AppServiceProvider extends ServiceProvider
             config(['session.cookie' => config('session.cookie_admin')]);
         }
     }
+
+    // protected $policies = [
+    //     User::class => UserPolicy::class,
+    //  ];
 }
