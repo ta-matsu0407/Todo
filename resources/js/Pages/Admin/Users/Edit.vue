@@ -1,9 +1,10 @@
 <script setup>
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive, computed} from 'vue'
+import { reactive, computed, watch} from 'vue'
 import { router as Inertia } from '@inertiajs/core';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import { Core as YubinBangoCore } from "yubinbango-core2";
 
 //コントローラから渡ってくる情報をdefinePropsで受けて、それを変数に入れておく
 const props = defineProps({
@@ -22,29 +23,44 @@ const form = reactive({
     birthday: props.user.birthday,
     gender: props.user.gender,
     email: props.user.email,
-    password: "", //パスワードは空で初期化
-    password_confirmation: "", // 確認用パスワードを追加
+    // password: "", //パスワードは空で初期化
+    // password_confirmation: "", // 確認用パスワードを追加
     memo: props.user.memo,
     status: props.user.status,
 })
 
-const passwordsMatch = computed(() => form.password === form.password_confirmation);
+// 数字を文字に変換 第１引数が郵便番号、第２がコールバックで引数に住所
+const fetchAddress = () => {
+    new YubinBangoCore(String(form.postcode), (value) => {
+    form.address = value.region + value.locality + value.street
+    })
+}
+
+// const passwordsMatch = computed(() => form.password === form.password_confirmation);
 
 const updateUser = id => {
-    if (!passwordsMatch.value) {
-        alert("パスワードが一致しません。");
-        return;
-    }
+    // if (!passwordsMatch.value) {
+    //     alert("パスワードが一致しません。");
+    //     return;
+    // }
 Inertia.put(route('admin.users.update', { user: id}), form)
 }
 //route:listをみると、updateはPUTとある
+
+// 郵便番号の長さをリアルタイムでチェック
+watch(() => form.postcode, (newVal) => {
+    if (newVal.length > 7) {
+        alert('電話番号は7桁以内で入力してください');
+        form.postcode = newVal.slice(0, 7);
+    }
+});
 
 </script>
 
 <template>
     <Head title="ユーザー編集" />
 
-    <adminAuthenticatedLayout>
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 {{ user.name }} さんの編集画面
@@ -107,7 +123,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="postcode" class="leading-7 text-sm text-gray-600">郵便番号</label>
-                                                    <input type="postcode" id="postcode" name="postcode" v-model="form.postcode" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <input type="postcode" id="postcode" name="postcode" @change="fetchAddress" v-model="form.postcode" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.postcode">{{ errors.postcode }}</div>
                                                 </div>
                                             </div>
@@ -125,7 +141,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                                     <div v-if="errors.birthday">{{ errors.birthday }}</div>
                                                 </div>
                                             </div>
-                                            <div class="p-2 w-full">
+                                            <!-- <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
                                                     <input type="password" id="password" name="password" v-model="form.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -138,7 +154,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                                     <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="!passwordsMatch" class="text-red-500 text-sm">パスワードが一致しません。</div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="p-2 w-full">
                                                 <!-- w-full:横幅いっぱい -->
                                                 <div class="relative">
@@ -176,5 +192,5 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                 </div>
             </div>
         </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>

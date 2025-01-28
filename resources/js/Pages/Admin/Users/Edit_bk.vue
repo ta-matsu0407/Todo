@@ -1,5 +1,5 @@
 <script setup>
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
 import { router as Inertia } from '@inertiajs/core';
@@ -29,7 +29,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
 <template>
     <Head title="ユーザー編集" />
 
-    <adminAuthenticatedLayout>
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 ユーザー編集
@@ -100,5 +100,5 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                 </div>
             </div>
         </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>

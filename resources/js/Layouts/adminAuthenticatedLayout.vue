@@ -45,6 +45,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     ユーザー一覧
                                 </NavLink>
+                                <NavLink
+                                    :href="route('admin.expired-users.index')"
+                                    :active="route().current('admin.expired-users.index')"
+                                >
+                                    削除済みユーザー一覧
+                                </NavLink>
+
                             </div>
                         </div>
 
@@ -158,6 +165,13 @@ const showingNavigationDropdown = ref(false);
                         >
                             ユーザー一覧
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('admin.expired-users.index')"
+                            :active="route().current('admin.expired-users.index')"
+                        >
+                            削除済みユーザー一覧
+                        </ResponsiveNavLink>
+
                     </div>
 
                     <!-- Responsive Settings Options -->

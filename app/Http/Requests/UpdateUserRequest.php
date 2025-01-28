@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\Gender;
+use App\Enums\Status;
+use Illuminate\Validation\Rules\Enum;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -22,7 +25,18 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'max:50'],
+            'kana' => ['required', 'regex:/^[ァ-ヾ ]+$/u','max:50'],
+            'tel' => ['required', 'max:20'],
+            'email' => ['required', 'email', 'max:255'],
+            'postcode' => ['required', 'max:7'],
+            'address' => ['required', 'max:100'],
+            'birthday' => ['required', 'date'],
+            // 'gender' => ['required'],
+            // 'password' => ['required'],
+            'memo' => ['max:1000'],
+            'gender' => ['required', new Enum(Gender::class)], // Gender Enumでバリデーション
+            'status' => ['required', new Enum(Status::class)], // Status Enumでバリデーション
         ];
     }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { router as Inertia } from '@inertiajs/core';
 
@@ -21,7 +21,7 @@ const deleteUser = id => {
 <template>
     <Head title="ユーザー詳細" />
 
-    <adminAuthenticatedLayout>
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 {{ user.name }} さんの詳細画面
@@ -145,5 +145,5 @@ const deleteUser = id => {
                 </div>
             </div>
         </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>

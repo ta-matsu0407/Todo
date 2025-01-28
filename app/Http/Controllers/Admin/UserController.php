@@ -16,7 +16,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Throwable;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,7 +46,7 @@ class UsersController extends Controller
 
     $users = User::searchUsers($request->search)
     //ビュー側から渡ってきた変数searchを受け取る
-    ->select('id', 'name', 'memo','status')
+    ->select('id', 'name', 'memo','deadline','status')
     ->paginate(10);
 
     // dd($users);
@@ -79,18 +79,18 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
 
-        $request->validate([
-            'name' => ['required', 'max:50'],
-            'kana' => ['required', 'regex:/^[ァ-ヾ]+$/u','max:50'],
-            'tel' => ['required', 'max:20', 'unique:users,tel'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'postcode' => ['required', 'max:7'],
-            'address' => ['required', 'max:100'],
-            'birthday' => ['date'],
-            'gender' => ['required'],
-            'password' => ['required'],
-            'memo' => ['max:1000'],
-        ]);
+        // $request->validate([
+        //     'name' => ['required', 'max:50'],
+        //     'kana' => ['required', 'regex:/^[ァ-ヾ]+$/u','max:50'],
+        //     'tel' => ['required', 'max:20', 'unique:users,tel'],
+        //     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+        //     'postcode' => ['required', 'max:7'],
+        //     'address' => ['required', 'max:100'],
+        //     'birthday' => ['required', 'date'],
+        //     'gender' => ['required'],
+        //     'password' => ['required'],
+        //     'memo' => ['max:1000'],
+        // ]);
 
         try{
             DB::transaction(function() use($request) {
@@ -121,6 +121,9 @@ class UsersController extends Controller
         }
 
         return to_route('admin.users.index')
+        // return Inertia::render('Admin/Users/Index', [
+        //     'users' => User::paginate(10)
+        // ])
         ->with([
             'message' => '登録しました。',
             'status' => 'success'
@@ -154,11 +157,11 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $request->validate([
-            'name' => ['required'],
-            'email' => ['required'],
-            'password' => ['required'],
-        ]);
+        // $request->validate([
+        //     'name' => ['required'],
+        //     'email' => ['required'],
+        //     // 'password' => ['required'],
+        // ]);
 
         // dd($user->name, $request->name);
         // $user->name...現在の情報
@@ -166,7 +169,7 @@ class UsersController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        // $user->password = $request->password;
         $user->memo = $request->memo;
         $user->status = $request->status;
         $user->kana = $request->kana;
@@ -178,6 +181,9 @@ class UsersController extends Controller
         $user->save();
 
         return to_route('admin.users.index')
+        // return Inertia::render('Admin/Users/Index', [
+        //     'users' => User::paginate(10)
+        // ])
         ->with([
             'message' => '更新しました。',
             'status' => 'success'
@@ -192,9 +198,25 @@ class UsersController extends Controller
         $user->delete();
 
         return to_route('admin.users.index')
+        // return Inertia::render('Admin/Users/Index', [
+        //     'users' => User::paginate(10)
+        // ])
         ->with([
             'message' => '削除しました。',
             'status' => 'danger'
         ]);
+    }
+
+    public function expiredUserIndex(){
+        $expiredUsers = User::onlyTrashed()->paginate(10);
+        // onlyTrashedでソフトデリートしたもののみ取得
+        return Inertia::render('Admin/Users/Expired', [
+            'expiredUsers' => $expiredUsers
+        ]);
+    }
+
+    public function expiredUserDestroy($id){
+        User::onlyTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->route('admin.expired-users.index');
     }
 }

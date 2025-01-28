@@ -1,6 +1,6 @@
 <script setup>
 import FlashMessage from '@/Components/FlashMessage.vue';
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import { ref } from 'vue'
@@ -8,7 +8,7 @@ import { router as Inertia } from '@inertiajs/core';
 
 
 defineProps({
-    users: Object
+    users: Object,
 })
 // コントローラーから渡ってくる情報は、definePropsで受け取る
 // 複数形のオブジェクトを受け取る
@@ -34,7 +34,7 @@ Inertia.get(route('admin.users.index', { search: search.value }))
 <template>
     <Head title="ユーザー一覧" />
 
-    <adminAuthenticatedLayout>
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 ユーザー一覧
@@ -62,11 +62,12 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                     <table class="table-auto w-full text-left whitespace-no-wrap">
                                         <thead>
                                             <tr>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/10">ID</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/5">名前</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/12">ID</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-2/12">名前</th>
                                                 <!-- w-1/5で、列全体の幅の1/5を名前列に割り当て -->
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-2/3">やること</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/6">状況</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-5/12">やること</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-2.5/12">期限</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1.5/12">状況</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -74,7 +75,7 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                                 <!-- 単数形 in 複数形 -->
                                                 <!-- v-forを回すときは :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    <Link class="text-blue-400" :href="route('admin.users.show', { user: user.id})">
+                                                    <Link class="text-blue-400 hover:underline" :href="route('admin.users.show', { user: user.id})">
                                                         {{ user.id }}</Link>
                                                 </td>
                                                 <!-- Linkコンポーネントで挟むことで、idをリンク化 -->
@@ -82,8 +83,9 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                                 <!-- ↑これはルートリスト情報を確認するとわかりやすい -->
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.name }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.memo }}</td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ user.deadline }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    <span v-if="user.status === 1" class="flex items-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
+                                                    <span v-if="user.status === 1" class="text-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
                                                     <span v-if="user.status === 0" class="flex items-center justify-center text-red-700 bg-red-100 rounded-lg p-2 text-center">完了</span>
                                                     <!-- justify-center:Flexboxの横方向（左右）の配置を中央に
                                                     items-center:Flexboxの縦方向（上下）の配置を中央に -->
@@ -101,5 +103,5 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                     </div>
                 </div>
             </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>

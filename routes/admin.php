@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,10 +15,18 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::resource('users', UsersController::class)
+Route::resource('users', UserController::class)
 ->middleware('auth:admins', 'verified');
+
 //7つのリソースコントローラーをまとめて設定(nameも自動的に設定される)
 //auth:admins + verified：管理者でログインし、かつメールアドレスが確認済みの場合のみアクセス可能
+
+Route::prefix('expired-users')->
+    middleware('auth:admins')->group(function(){
+        Route::get('index', [UserController::class,'expiredUserIndex'])->name('expired-users.index');
+        Route::delete('destroy/{expiredUser}',[UserController::class, 'expiredUserDestroy'])->name('expired-users.destroy');
+});
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');

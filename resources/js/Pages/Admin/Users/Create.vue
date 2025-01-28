@@ -1,7 +1,7 @@
 <script setup>
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive, computed } from 'vue'
+import { reactive, computed, watch} from 'vue'
 import { router as Inertia } from '@inertiajs/core';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Core as YubinBangoCore } from "yubinbango-core2";
@@ -44,12 +44,21 @@ Inertia.post('/admin/users', form)
 // };
 // メソッド名は動詞＋名詞
 
+
+// 郵便番号の長さをリアルタイムでチェック
+watch(() => form.postcode, (newVal) => {
+    if (newVal.length > 7) {
+        alert('郵便番号は7桁以内で入力してください');
+        form.postcode = newVal.slice(0, 7);
+    }
+});
+
 </script>
 
 <template>
     <Head title="ユーザー登録" />
 
-    <adminAuthenticatedLayout>
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 ユーザー登録
@@ -97,6 +106,7 @@ Inertia.post('/admin/users', form)
                                                     <label for="gender1" class="ml-2 mr-10">女性</label>
                                                     <input type="radio" id="gender2" name="gender" v-model="form.gender" value="2" >
                                                     <label for="gender2" class="ml-2 mr-10">その他</label>
+                                                    <div v-if="errors.gender">{{ errors.gender }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -168,5 +178,5 @@ Inertia.post('/admin/users', form)
                 </div>
             </div>
         </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>
