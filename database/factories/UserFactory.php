@@ -43,6 +43,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'memo' => fake()->realText(50),
             'deadline' => fake()->dateTimeThisYear(),
+            'status' => fake()->numberBetween(0, 1),
         ];
     }
 

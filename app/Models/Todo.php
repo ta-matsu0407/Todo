@@ -2,8 +2,6 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
@@ -13,10 +11,10 @@ class Todo extends Model
 
     protected $fillable = [
         'user_id',
-        'title',
+        'homework',
         'memo',
         'status',
-        'due_date',
+        'deadline',
     ];
 
     public function user()

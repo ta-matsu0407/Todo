@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\TodoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,8 @@ Route::prefix('expired-users')->
         Route::delete('destroy/{expiredUser}',[UserController::class, 'expiredUserDestroy'])->name('expired-users.destroy');
 });
 
+Route::resource('todos', TodoController::class)
+->middleware('auth:admins', 'verified');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');

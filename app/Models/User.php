@@ -77,7 +77,7 @@ class User extends Authenticatable
         return $query; // 入力がない場合はそのまま返す
     }
 
-    public function todo()
+    public function todos()
     {
         return $this->hasMany(Todo::class);
         // hasOne：１対１

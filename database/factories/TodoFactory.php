@@ -18,10 +18,10 @@ class TodoFactory extends Factory
     {
         return [
             'user_id' => rand(1, User::count()),
-            'title' => fake()->realText(10),
+            'homework' => fake()->realText(20),
             'memo' => fake()->realText(50),
-            'status' => fake()->numberBetween(0, 2),
-            'due_date' => fake()->dateTime(),
+            'status' => fake()->numberBetween(0, 1),
+            'deadline' => fake()->dateTimeThisYear(),
 
         ];
     }
