@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->constrained()->onUpdate('cascade');
             $table->string('homework');
-            $table->string('memo');
+            $table->string('memo')->nullable();
             $table->integer('status')->default('1');
-            $table->date('deadline')->nullable();
+            $table->date('deadline');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Models\Todo;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\StoreTodoRequest;
 
 
 class TodoController extends Controller
@@ -30,16 +31,36 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::select('id', 'name')->get();
+
+        return Inertia::render('Admin/Todos/Create', [
+            'users' => $users
+        // 作成した変数をvue側に渡す
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTodoRequest $request)
     {
-        //
-    }
+        // dd($request->all());
+        // データを保存
+        Todo::create([
+            'user_id' => $request->user_id,
+            'homework' => $request->homework,
+            'memo' => $request->memo,
+            'status' => '1', // デフォルトで "未完了" に設定
+            'deadline' => $request->deadline,
+        ]);
+
+        // 一覧ページにリダイレクト
+        return to_route('admin.todos.index')
+        ->with([
+            'message' => '登録しました。',
+            'status' => 'success'
+        ]);
+}
 
     /**
      * Display the specified resource.

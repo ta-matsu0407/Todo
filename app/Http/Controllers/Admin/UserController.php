@@ -92,35 +92,52 @@ class UserController extends Controller
         //     'memo' => ['max:1000'],
         // ]);
 
-        try{
-            DB::transaction(function() use($request) {
-                $user = User::create([
-                    'name' => $request->name,
-                    'kana' => $request->kana,
-                    'tel' => $request->tel,
-                    'email' => $request->email,
-                    'postcode' => $request->postcode,
-                    'address' => $request->address,
-                    'birthday' => $request->birthday,
-                    'gender' => $request->gender,
-                    'password' => $request->password,
-                    'memo' => $request->memo,
-                ]);
+        // try{
+        //     DB::beginTransaction();
+        //     // トランザクション開始
+        //         $user = User::create([
+        //             'name' => $request->name,
+        //             'kana' => $request->kana,
+        //             'tel' => $request->tel,
+        //             'email' => $request->email,
+        //             'postcode' => $request->postcode,
+        //             'address' => $request->address,
+        //             'birthday' => $request->birthday,
+        //             'gender' => $request->gender,
+        //             'password' => $request->password,
+        //             'memo' => $request->memo,
+        //         ]);
 
-                Todo::create([
-                    'user_id' => $user->id,
-                    'title' => 'タイトルを入力して下さい。',
-                    'memo' => '',
-                    'status' => '1',
-                    'due_date' => '2000/2/22',
-                ]);
-            }, 1);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
 
-        return to_route('admin.users.index')
+
+        //         DB::commit(); // 成功したら保存
+        //     } catch (Throwable $e) {
+        //         DB::rollBack(); // エラーならロールバック
+        //         Log::error($e);
+        //         throw $e;
+        //     }
+
+        // ユーザー登録とTodo登録を分離したため、トランザクションは不要
+
+        $user = User::create([
+            'name' => $request->name,
+            'kana' => $request->kana,
+            'tel' => $request->tel,
+            'email' => $request->email,
+            'postcode' => $request->postcode,
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
+            'password' => $request->password,
+            'memo' => $request->memo,
+        ]);
+
+        return to_route('admin.users.index', [
+            'user_id' => $user->id
+            // 'user_id'も同時に生成
+        ])
+
+
         // return Inertia::render('Admin/Users/Index', [
         //     'users' => User::paginate(10)
         // ])

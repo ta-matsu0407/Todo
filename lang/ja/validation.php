@@ -174,6 +174,9 @@ return [
         'postcode' => '郵便番号',
         'address' => '住所',
         'birthday' => '誕生日',
+        'user_id' => '生徒名',
+        'homework' => '宿題',
+        'deadline' => '期限'
     ],
 
 ];

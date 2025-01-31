@@ -42,7 +42,7 @@ const searchTodos = () => {
                                             検索
                                         </button>
                                     </div>
-                                        <Link as="button" :href="route('admin.todos.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">ユーザー登録</Link>
+                                        <Link as="button" :href="route('admin.todos.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">宿題登録</Link>
                                     </div>
                                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                     <table class="table-auto w-full text-left whitespace-no-wrap">
