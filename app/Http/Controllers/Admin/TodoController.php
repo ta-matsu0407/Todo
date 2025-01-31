@@ -67,8 +67,24 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        //
+        // dd($todo);
+        $todo->load('user');
+
+        return Inertia::render('Admin/Todos/Show', [
+            'todo' => $todo
+        ]);
     }
+
+    // public function show($id)
+    // {
+
+    //     $todo = Todo::with('user')->findOrFail($id);
+
+    //     return Inertia::render('Admin/Todos/Show', [
+    //         'todo' => $todo
+    //     ]);
+    // }
+
 
     /**
      * Show the form for editing the specified resource.

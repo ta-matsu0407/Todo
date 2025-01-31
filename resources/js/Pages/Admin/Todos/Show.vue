@@ -5,13 +5,13 @@ import { router as Inertia } from '@inertiajs/core';
 
 
 defineProps({
-    user: Object,
-    // todo: Object,
+    // user: Object,
+    todo: Object,
 
 })
 
-const deleteUser = id => {
-    Inertia.delete(route('admin.users.destroy', {user: id}), {
+const deleteTodo = id => {
+    Inertia.delete(route('admin.todos.destroy', {todo: id}), {
     onBefore: () => confirm('本当に削除しますか?')
     })
 }
@@ -19,12 +19,12 @@ const deleteUser = id => {
 </script>
 
 <template>
-    <Head title="ユーザー詳細" />
+    <Head title="ユーザー宿題詳細" />
 
     <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ user.name }} さんの詳細画面
+                {{ todo.user.name }} さんの宿題詳細画面
             </h2>
         </template>
 
@@ -38,86 +38,35 @@ const deleteUser = id => {
                                         <div class="flex flex-wrap -m-2">
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="name" class="leading-7 text-sm text-gray-600">氏名</label>
+                                                    <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
                                                     <div id="name" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <!-- 表示させるだけなので、input→divタグに -->
-                                                        {{ user.name }}
+                                                        {{ todo.user.name }}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="kana" class="leading-7 text-sm text-gray-600">カナ</label>
-                                                    <div id="kana" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.kana }}
+                                                    <label for="homework" class="leading-7 text-sm text-gray-600">宿題</label>
+                                                    <div  id="homework" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ todo.homework }}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="gender" class="leading-7 text-sm text-gray-600">性別</label>
-                                                    <div id="gender" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        <span v-if="user.gender === 0" >男性</span>
-                                                        <span v-if="user.gender === 1" >女性</span>
-                                                        <span v-if="user.gender === 2" >その他</span>
+                                                    <label for="deadline" class="leading-7 text-sm text-gray-600">期限</label>
+                                                    <div id="deadline" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                        {{ todo.deadline }}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="tel" class="leading-7 text-sm text-gray-600">電話番号</label>
-                                                    <div id="tel" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.tel }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="email" class="leading-7 text-sm text-gray-600">メールアドレス</label>
-                                                    <div id="email" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.email }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="postcode" class="leading-7 text-sm text-gray-600">郵便番号</label>
-                                                    <div id="postcode" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.postcode }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="address" class="leading-7 text-sm text-gray-600">住所</label>
-                                                    <div id="address" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.address }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="birthday" class="leading-7 text-sm text-gray-600">誕生日</label>
-                                                    <div id="birthday" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.birthday }}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="title" class="leading-7 text-sm text-gray-600">タイトル</label>
-                                                    <div id="title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 text-base text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ user.todo.title }}
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やるとこ</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">メモ</label>
                                                     <div id="memo" style="white-space: pre-wrap;" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">
                                                         <!-- style="white-space: pre-wrap;":改行がそのまま表示される -->
-                                                        {{ user.memo }}
+                                                        {{ todo.memo }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,17 +74,17 @@ const deleteUser = id => {
                                                 <div class="relative">
                                                     <label for="status" class="leading-7 text-sm text-gray-600">状況</label>
                                                     <div id="status" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        <span v-if="user.status === 1" class="flex items-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
-                                                        <span v-if="user.status === 0" class="flex items-center text-red-700 bg-red-100 rounded-lg p-2">完了</span>
+                                                        <span v-if="todo.status === 1" class="flex items-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
+                                                        <span v-if="todo.status === 0" class="flex items-center text-red-700 bg-red-100 rounded-lg p-2">完了</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
-                                                <Link as="button" :href="route('admin.users.edit', { user: user.id})" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集する</Link>
+                                                <Link as="button" :href="route('admin.todos.edit', { todo: todo.id})" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集する</Link>
                                                 <!-- Linkのみだとaタグ、as="button"つけてボタンに -->
                                             </div>
                                             <div class="p-2 w-full">
-                                                <button @click="deleteUser(user.id)" class="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除する</button>
+                                                <button @click="deleteTodo(todo.id)" class="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除する</button>
                                             </div>
                                         </div>
                                     </div>
