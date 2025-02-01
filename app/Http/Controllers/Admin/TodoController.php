@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
 
 
 class TodoController extends Controller
@@ -91,15 +92,30 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        //
+        $todo->load('user');
+
+        return Inertia::render('Admin/Todos/Edit', [
+            'todo' => $todo
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Todo $todo)
+    public function update(UpdateTodoRequest $request, Todo $todo)
     {
-        //
+        $todo->homework = $request->homework;
+        $todo->deadline = $request->deadline;
+        $todo->status = $request->status;
+        $todo->memo = $request->memo;
+        $todo->save();
+
+        return to_route('admin.todos.index')
+        ->with([
+            'message' => '更新しました。',
+            'status' => 'success'
+        ]);
+
     }
 
     /**
@@ -107,6 +123,12 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+
+        return to_route('admin.todos.index')
+        ->with([
+            'message' => '削除しました。',
+            'status' => 'danger'
+        ]);
     }
 }

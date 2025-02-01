@@ -18,7 +18,11 @@ return new class extends Migration
             $table->string('memo')->nullable();
             $table->integer('status')->default('1');
             $table->date('deadline');
-            $table->timestamps();
+            // $table->timestamps();
+            $table->datetime('created_at')->nullable();
+            $table->datetime('updated_at')->nullable();
+            $table->datetime('deleted_at')->nullable();
+
         });
     }
 
