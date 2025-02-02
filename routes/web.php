@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\TodoController;
+use App\Http\Controllers\UserTodoController;
 use App\Http\Controllers\UserDashboardController;
 
 Route::get('/', function () {
@@ -47,8 +47,11 @@ Route::middleware(['auth:users', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('todos', TodoController::class)
+Route::resource('todos', UserTodoController::class)
 ->middleware('auth:users', 'verified');
 
+Route::patch('/todos/{todo}/status', [UserTodoController::class, 'updateStatus'])
+    ->name('user.todos.updateStatus')
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';

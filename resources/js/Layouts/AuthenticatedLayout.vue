@@ -39,6 +39,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     ダッシュボード
                                 </NavLink>
+                                <NavLink
+                                    :href="route('todos.index')"
+                                    :active="route().current('todos.index')"
+                                >
+                                    宿題一覧
+                                </NavLink>
                             </div>
                         </div>
 
@@ -147,7 +153,14 @@ const showingNavigationDropdown = ref(false);
                             ダッシュボード
                         </ResponsiveNavLink>
                     </div>
-
+                    <div class="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            :href="route('todos.index')"
+                            :active="route().current('todos.index')"
+                        >
+                            宿題一覧
+                        </ResponsiveNavLink>
+                    </div>
                     <!-- Responsive Settings Options -->
                     <div
                         class="border-t border-gray-200 pb-1 pt-4"
