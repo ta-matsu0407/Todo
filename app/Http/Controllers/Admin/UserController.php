@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Throwable;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
 {
@@ -78,20 +79,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-
-        // $request->validate([
-        //     'name' => ['required', 'max:50'],
-        //     'kana' => ['required', 'regex:/^[ァ-ヾ]+$/u','max:50'],
-        //     'tel' => ['required', 'max:20', 'unique:users,tel'],
-        //     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-        //     'postcode' => ['required', 'max:7'],
-        //     'address' => ['required', 'max:100'],
-        //     'birthday' => ['required', 'date'],
-        //     'gender' => ['required'],
-        //     'password' => ['required'],
-        //     'memo' => ['max:1000'],
-        // ]);
-
         // try{
         //     DB::beginTransaction();
         //     // トランザクション開始
@@ -174,19 +161,12 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        // $request->validate([
-        //     'name' => ['required'],
-        //     'email' => ['required'],
-        //     // 'password' => ['required'],
-        // ]);
-
         // dd($user->name, $request->name);
         // $user->name...現在の情報
         // $request->name...新しい情報
 
         $user->name = $request->name;
         $user->email = $request->email;
-        // $user->password = $request->password;
         $user->memo = $request->memo;
         $user->status = $request->status;
         $user->kana = $request->kana;
@@ -224,7 +204,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function expiredUserIndex(){
+    public function expiredUserIndex()
+    {
         $expiredUsers = User::onlyTrashed()->paginate(10);
         // onlyTrashedでソフトデリートしたもののみ取得
         return Inertia::render('Admin/Users/Expired', [
@@ -232,8 +213,58 @@ class UserController extends Controller
         ]);
     }
 
-    public function expiredUserDestroy($id){
+    public function expiredUserDestroy($id)
+    {
         User::onlyTrashed()->findOrFail($id)->forceDelete();
         return redirect()->route('admin.expired-users.index');
+    }
+
+    public function export()
+    {
+        $fileName = 'users.csv';
+
+        $users = User::all();
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=Shift_JIS", // Shift_JIS を指定
+            // CSVファイルとして扱うことを指定
+            "Content-Disposition" => "attachment; filename={$fileName}",
+            // ダウンロード時のファイル名 を指定
+        ];
+
+        $callback = function () use ($users) {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, [
+                'ID',
+                '生徒名',
+                '生徒名(カナ)',
+                '電話番号',
+                'メールアドレス',
+                '郵便番号',
+                '住所',
+                '誕生日',
+                '備考',
+                '登録日',
+            ]);
+            // CSVの1行を出力するPHPの関数。最初にヘッダーを出力
+
+            foreach ($users as $user) {
+                fputcsv($file, [
+                $user->id,
+                $user->name,
+                $user->kana,
+                // strval($user->tel), // 明示的に文字列化
+                '"' . $user->tel . '"',
+                $user->postcode,
+                $user->address,
+                $user->birthday,
+                $user->memo,
+                $user->created_at,
+            ]);
+            }
+            fclose($file);
+        };
+        return new StreamedResponse($callback, 200, $headers);
     }
 }

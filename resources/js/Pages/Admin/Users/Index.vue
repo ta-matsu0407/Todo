@@ -21,13 +21,21 @@ const search = ref('')
 
 // ref で定義した変数の値にアクセスしたり更新する際には、.value が必要
 const searchUsers = () => {
-Inertia.get(route('admin.users.index', { search: search.value }))
+    Inertia.get(route('admin.users.index', { search: search.value }))
 }
 // Inertia.get クライアント (ブラウザ) からサーバーへリクエストを送信
 // search パラメータを付けてリクエストを送信
 // 値を取得する → search.value
 // 値を更新する → search.value = '新しい値'
 // 第二引数の情報をcontrollerのindexメソッドに値を渡す
+
+// const exportCsv = () => {
+//     Inertia.get(route('admin.users.export'));
+// };
+
+const exportCsv = () => {
+    window.location.href = route('admin.users.export'); // CSVエクスポートのルートへ遷移
+};
 
 </script>
 
@@ -57,7 +65,8 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                         </button>
                                     </div>
                                     <Link as="button" :href="route('admin.users.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">ユーザー登録</Link>
-                                    <!-- Linkのみだとaタグになるが、Link as="button"とするとbuttonタグ -->                                </div>
+                                    <!-- Linkのみだとaタグになるが、Link as="button"とするとbuttonタグ -->
+                                </div>
                                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                     <table class="table-auto w-full text-left whitespace-no-wrap">
                                         <thead>
@@ -98,6 +107,14 @@ Inertia.get(route('admin.users.index', { search: search.value }))
                                 </div>
                             </div>
                             <Pagination class="mt-6" :links="users.links"></Pagination>
+                            <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
+                                <button
+                                    @click="exportCsv"
+                                    class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                                >
+                                    CSVエクスポート
+                                </button>
+                            </div>
                         </section>
                         </div>
                     </div>

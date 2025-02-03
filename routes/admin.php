@@ -41,4 +41,6 @@ Route::middleware('auth:admins')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('admin/users/export', [UserController::class, 'export'])->middleware('auth:admins', 'verified')->name('users.export');
+
 require __DIR__.'/adminAuth.php';
