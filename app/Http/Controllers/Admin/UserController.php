@@ -235,7 +235,7 @@ class UserController extends Controller
         $callback = function () use ($users) {
             $file = fopen('php://output', 'w');
 
-            fputcsv($file, [
+            $header = [
                 'ID',
                 '生徒名',
                 '生徒名(カナ)',
@@ -246,22 +246,29 @@ class UserController extends Controller
                 '誕生日',
                 '備考',
                 '登録日',
-            ]);
+            ];
             // CSVの1行を出力するPHPの関数。最初にヘッダーを出力
+            mb_convert_variables('SJIS-win', 'UTF-8', $header);
+            fputcsv($file, $header);
 
             foreach ($users as $user) {
-                fputcsv($file, [
-                $user->id,
-                $user->name,
-                $user->kana,
-                // strval($user->tel), // 明示的に文字列化
-                '"' . $user->tel . '"',
-                $user->postcode,
-                $user->address,
-                $user->birthday,
-                $user->memo,
-                $user->created_at,
-            ]);
+                $users_data = [
+                    $user->id,
+                    $user->name,
+                    $user->kana,
+                    // strval($user->tel), // 明示的に文字列化
+                    '"' . $user->tel . '"',
+                    $user->email,
+                    $user->postcode,
+                    $user->address,
+                    $user->birthday,
+                    $user->memo,
+                    $user->created_at,
+                ];
+                // 文字コード変換
+                mb_convert_variables('SJIS-win', 'UTF-8', $users_data);
+
+                fputcsv($file, $users_data);
             }
             fclose($file);
         };
