@@ -37,8 +37,8 @@ Route::middleware(['auth:users', 'verified'])->group(function () {
 
     // カスタマイズしたユーザーダッシュボードへのルート
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/edit/{user}', [UserDashboardController::class, 'edit'])->name('user.edit');
-    Route::put('/edit/{user}', [UserDashboardController::class, 'update'])->name('user.update');
+    // Route::get('/edit/{user}', [UserDashboardController::class, 'edit'])->name('user.edit');
+    // Route::put('/edit/{user}', [UserDashboardController::class, 'update'])->name('user.update');
 
 
     // プロフィール編集関連のルート

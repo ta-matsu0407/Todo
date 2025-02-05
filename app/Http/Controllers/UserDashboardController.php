@@ -21,19 +21,19 @@ class UserDashboardController extends Controller
         ]);
     }
 
-    public function edit(User $user)
-    {
-        if (Gate::denies('view', $user)) {
-            abort(403, 'Unauthorized action.');
-        }
+    // public function edit(User $user)
+    // {
+    //     if (Gate::denies('view', $user)) {
+    //         abort(403, 'Unauthorized action.');
+    //     }
 
-        return Inertia::render('User/Edit', [
-            'user' => $user
-        ]);
-    }
+    //     return Inertia::render('User/Edit', [
+    //         'user' => $user
+    //     ]);
+    // }
 
-    public function update(UpdateUserDashboardRequest $request, User $user)
-    {
+    // public function update(UpdateUserDashboardRequest $request, User $user)
+    // {
         // dd($user, $request);
 
         // $request->validate([
@@ -49,17 +49,17 @@ class UserDashboardController extends Controller
         // $user->memo = $request->memo;
         // $user->save();
 
-        $user->update([
-            'status' => $request->status,
-            'memo' => $request->memo,
-        ]);
+        // $user->update([
+        //     'status' => $request->status,
+        //     'memo' => $request->memo,
+        // ]);
         // save()だと一括更新してしまう。
         // 必須項目がblankになってしまうので、updateメソッドで更新項目を指定する。
 
-        return to_route('dashboard')
-        ->with([
-            'message' => '更新しました。',
-            'status' => 'success'
-        ]);
-    }
+        // return to_route('dashboard')
+        // ->with([
+        //     'message' => '更新しました。',
+        //     'status' => 'success'
+        // ]);
+    // }
 }
