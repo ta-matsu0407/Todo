@@ -2,7 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive} from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core';
 
 const props = defineProps({
     errors: Object,
@@ -20,7 +21,8 @@ const form = reactive({
 // }
 
 const storeTodo = () => {
-    Inertia.post(route('todos.store'), form)
+    // Inertia.post(route('todos.store'), form)
+    router.post(route('todos.store'), form)
 }
 
 </script>
