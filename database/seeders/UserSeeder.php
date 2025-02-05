@@ -20,21 +20,21 @@ class UserSeeder extends Seeder
                 'email' => 'test1@test.com',
                 'password' => Hash::make('password123'),//Hashで暗号化
                 'created_at' => '2024/01/01 11:11:11',
-                'memo' => 'aaaaa',
+                // 'memo' => 'aaaaa',
             ],
             [
                 'name' => 'test2',
                 'email' => 'test2@test.com',
                 'password' => Hash::make('password123'),//Hashで暗号化
                 'created_at' => '2024/01/01 11:11:11',
-                'memo' => 'bbbbb',
+                // 'memo' => 'bbbbb',
             ],
             [
                 'name' => 'test3',
                 'email' => 'test3@test.com',
                 'password' => Hash::make('password123'),//Hashで暗号化
                 'created_at' => '2024/01/01 11:11:11',
-                'memo' => 'ccccc',
+                // 'memo' => 'ccccc',
             ],
         ]);
 

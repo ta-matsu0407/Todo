@@ -26,7 +26,7 @@ const form = reactive({
     // password: "", //パスワードは空で初期化
     // password_confirmation: "", // 確認用パスワードを追加
     memo: props.user.memo,
-    status: props.user.status,
+    // status: props.user.status,
 })
 
 // 数字を文字に変換 第１引数が郵便番号、第２がコールバックで引数に住所
@@ -58,12 +58,12 @@ watch(() => form.postcode, (newVal) => {
 </script>
 
 <template>
-    <Head title="ユーザー編集" />
+    <Head title="生徒情報編集" />
 
     <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ user.name }} さんの編集画面
+                {{ user.name }} さんの情報編集画面
             </h2>
         </template>
 
@@ -82,7 +82,7 @@ watch(() => form.postcode, (newVal) => {
                                         <div class="flex flex-wrap -m-2">
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="name" class="leading-7 text-sm text-gray-600">氏名</label>
+                                                    <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
                                                     <input type="text" id="name" name="name" v-model="form.name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <!-- v-model:リアクティブに -->
                                                     <div v-if="errors.name">{{ errors.name }}</div>
@@ -137,7 +137,7 @@ watch(() => form.postcode, (newVal) => {
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="birthday" class="leading-7 text-sm text-gray-600">誕生日</label>
-                                                    <input type="birthday" id="birthday" name="birthday" v-model="form.birthday" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <input type="date" id="birthday" name="birthday" v-model="form.birthday" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.birthday">{{ errors.birthday }}</div>
                                                 </div>
                                             </div>
@@ -158,17 +158,17 @@ watch(() => form.postcode, (newVal) => {
                                             <div class="p-2 w-full">
                                                 <!-- w-full:横幅いっぱい -->
                                                 <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">備考</label>
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="p-2 w-full">
+                                            <!-- <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="status" class="leading-7 text-sm text-gray-800">状況</label>
+                                                    <label for="status" class="leading-7 text-sm text-gray-800">状況</label> -->
                                                     <!-- <input type="radio" id="status" name="status" v-model="form.status" value="1" > -->
                                                     <!-- v-model="form.status"として、form オブジェクトの status プロパティにバインド -->
                                                     <!-- value="1":statusが1の時にチェックが入る -->
-                                                    <select
+                                                    <!-- <select
                                                         id="status"
                                                         name="status"
                                                         v-model="form.status"
@@ -178,7 +178,7 @@ watch(() => form.postcode, (newVal) => {
                                                         <option value="0">完了</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="p-2 w-full">
                                                 <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>

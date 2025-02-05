@@ -27,12 +27,12 @@ Inertia.put(route('admin.users.update', { user: id}), form)
 </script>
 
 <template>
-    <Head title="ユーザー編集" />
+    <Head title="生徒情報編集" />
 
     <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                ユーザー編集
+                生徒情報編集
             </h2>
         </template>
 
@@ -51,7 +51,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                         <div class="flex flex-wrap -m-2">
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="name" class="leading-7 text-sm text-gray-600">氏名</label>
+                                                    <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
                                                     <input type="text" id="name" name="name" v-model="form.name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <!-- v-model:リアクティブに -->
                                                     <div v-if="errors.name">{{ errors.name }}</div>

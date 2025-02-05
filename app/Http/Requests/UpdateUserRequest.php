@@ -36,7 +36,7 @@ class UpdateUserRequest extends FormRequest
             // 'password' => ['required'],
             'memo' => ['max:1000'],
             'gender' => ['required', new Enum(Gender::class)], // Gender Enumでバリデーション
-            'status' => ['required', new Enum(Status::class)], // Status Enumでバリデーション
+            // 'status' => ['required', new Enum(Status::class)], // Status Enumでバリデーション
         ];
     }
 }

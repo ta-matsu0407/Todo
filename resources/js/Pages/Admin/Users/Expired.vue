@@ -26,12 +26,12 @@ const deleteUser = id => {
 </script>
 
 <template>
-    <Head title="削除済みユーザー一覧" />
+    <Head title="削除済み生徒一覧" />
 
     <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                削除済みユーザー一覧
+                削除済み生徒一覧
             </h2>
         </template>
         <div class="py-12">
@@ -55,7 +55,7 @@ const deleteUser = id => {
                                         <thead>
                                             <tr>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/10">ID</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/5">名前</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/5">生徒名</th>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/3">削除した日</th>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/3"></th>
                                             </tr>

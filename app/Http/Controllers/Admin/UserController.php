@@ -47,7 +47,7 @@ class UserController extends Controller
 
     $users = User::searchUsers($request->search)
     //ビュー側から渡ってきた変数searchを受け取る
-    ->select('id', 'name', 'memo','deadline','status')
+    ->select('id', 'name', 'tel','email','memo')
     ->paginate(10);
 
     // dd($users);
@@ -168,7 +168,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->memo = $request->memo;
-        $user->status = $request->status;
+        // $user->status = $request->status;
         $user->kana = $request->kana;
         $user->tel = $request->tel;
         $user->postcode = $request->postcode;

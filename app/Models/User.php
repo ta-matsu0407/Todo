@@ -31,7 +31,7 @@ class User extends Authenticatable
         'gender',
         'password',
         'memo',
-        'status',
+        // 'status',
     ];
     //コントローラ側 create() で保存できるように$fillableを設定
     //複数代入の脆弱性から保護するために必要
@@ -66,12 +66,12 @@ class User extends Authenticatable
     {
         if (!empty($input)) {
             // 状況 (status) に該当する値で検索
-            if (in_array($input, ['実施', '完了'])) {
-                return $query->where('status', $input);
-            }
+            // if (in_array($input, ['実施', '完了'])) {
+            //     return $query->where('status', $input);
+            // }
 
-            // 状況に該当しない場合は kana で検索
-            return $query->where('kana', 'like', $input . '%');
+            // 状況に該当しない場合は name で検索
+            return $query->where('name', 'like', $input . '%');
         }
 
         return $query; // 入力がない場合はそのまま返す

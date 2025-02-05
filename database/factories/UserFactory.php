@@ -41,9 +41,9 @@ class UserFactory extends Factory
             'gender' => fake()->numberBetween(0, 2),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'memo' => fake()->realText(50),
-            'deadline' => fake()->dateTimeThisYear(),
-            'status' => fake()->numberBetween(0, 1),
+            'memo' => fake()->realText(15),
+            // 'deadline' => fake()->dateTimeThisYear(),
+            // 'status' => fake()->numberBetween(0, 1),
         ];
     }
 

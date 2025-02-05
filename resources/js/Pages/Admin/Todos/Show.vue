@@ -19,7 +19,7 @@ const deleteTodo = id => {
 </script>
 
 <template>
-    <Head title="ユーザー宿題詳細" />
+    <Head title="生徒宿題詳細画面" />
 
     <AdminAuthenticatedLayout>
         <template #header>
