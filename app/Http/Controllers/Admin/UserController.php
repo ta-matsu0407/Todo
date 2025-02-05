@@ -215,8 +215,22 @@ class UserController extends Controller
 
     public function expiredUserDestroy($id)
     {
-        User::onlyTrashed()->findOrFail($id)->forceDelete();
-        return redirect()->route('admin.expired-users.index');
+        // User::onlyTrashed()->findOrFail($id)->forceDelete();
+
+        $user = User::onlyTrashed()->findOrFail($id);
+
+        // 関連する todos も完全削除
+        $user->todos()->forceDelete();
+
+        // ユーザーを完全削除
+        $user->forceDelete();
+
+        return redirect()->route('admin.expired-users.index')
+        ->with([
+            'message' => '完全に削除しました。',
+            'status' => 'danger'
+        ]);
+;
     }
 
     public function export()

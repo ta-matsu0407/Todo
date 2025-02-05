@@ -4,7 +4,8 @@ import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import { ref } from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core';
 
 
 defineProps({
@@ -21,7 +22,9 @@ const search = ref('')
 
 // ref で定義した変数の値にアクセスしたり更新する際には、.value が必要
 const searchUsers = () => {
-    Inertia.get(route('admin.users.index', { search: search.value }))
+    // Inertia.get(route('admin.users.index', { search: search.value }))
+    router.get(route('admin.users.index', { search: search.value }))
+
 }
 // Inertia.get クライアント (ブラウザ) からサーバーへリクエストを送信
 // search パラメータを付けてリクエストを送信

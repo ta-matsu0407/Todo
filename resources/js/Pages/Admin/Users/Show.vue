@@ -1,7 +1,8 @@
 <script setup>
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core';
 
 
 defineProps({
@@ -11,7 +12,8 @@ defineProps({
 })
 
 const deleteUser = id => {
-    Inertia.delete(route('admin.users.destroy', {user: id}), {
+    // Inertia.delete(route('admin.users.destroy', {user: id}), {
+    router.delete(route('admin.users.destroy', {user: id}), {
     onBefore: () => confirm('本当に削除しますか?')
     })
 }

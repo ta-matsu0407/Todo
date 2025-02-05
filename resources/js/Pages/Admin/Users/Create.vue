@@ -2,7 +2,8 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive, computed, watch} from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core'
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Core as YubinBangoCore } from "yubinbango-core2";
 //YubinBangoCoreのライブラリをインポート
@@ -36,7 +37,7 @@ const fetchAddress = () => {
 const passwordsMatch = computed(() => form.password === form.password_confirmation);
 
 const storeUser = () => {
-Inertia.post('/admin/users', form)
+router.post('/admin/users', form)
 }
 // () => は アロー関数と呼ばれるJSの記法の一つ。()の中に、関数が受け取る引数を指定。↓従来の書き方
 // const storeUser = function() {

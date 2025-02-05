@@ -2,7 +2,8 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive, computed, watch} from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Core as YubinBangoCore } from "yubinbango-core2";
 
@@ -43,7 +44,8 @@ const updateUser = id => {
     //     alert("パスワードが一致しません。");
     //     return;
     // }
-Inertia.put(route('admin.users.update', { user: id}), form)
+// Inertia.put(route('admin.users.update', { user: id}), form)
+router.put(route('admin.users.update', { user: id}), form)
 }
 //route:listをみると、updateはPUTとある
 

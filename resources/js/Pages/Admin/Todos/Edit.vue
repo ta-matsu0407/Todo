@@ -2,7 +2,9 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core';
+
 
 //コントローラから渡ってくる情報をdefinePropsで受けて、それを変数に入れておく
 const props = defineProps({
@@ -25,7 +27,9 @@ const updateTodo = id => {
     //     alert("パスワードが一致しません。");
     //     return;
     // }
-Inertia.put(route('admin.todos.update', { todo: id}), form)
+// Inertia.put(route('admin.todos.update', { todo: id}), form)
+// }
+router.put(route('admin.todos.update', { todo: id}), form)
 }
 //route:listをみると、updateはPUTとある
 

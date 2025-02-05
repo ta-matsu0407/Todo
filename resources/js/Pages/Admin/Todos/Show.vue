@@ -1,7 +1,8 @@
 <script setup>
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-import { router as Inertia } from '@inertiajs/core';
+// import { router as Inertia } from '@inertiajs/core';
+import { router } from '@inertiajs/core';
 
 
 defineProps({
@@ -10,11 +11,18 @@ defineProps({
 
 })
 
+// const deleteTodo = id => {
+//     Inertia.delete(route('admin.todos.destroy', {todo: id}), {
+//     onBefore: () => confirm('本当に削除しますか?')
+//     })
+// }
+
 const deleteTodo = id => {
-    Inertia.delete(route('admin.todos.destroy', {todo: id}), {
+    router.delete(route('admin.todos.destroy', {todo: id}), {
     onBefore: () => confirm('本当に削除しますか?')
     })
 }
+
 // アロー関数で引数が１つの場合は()を省略できる
 </script>
 
