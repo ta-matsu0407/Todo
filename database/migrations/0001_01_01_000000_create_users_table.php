@@ -15,24 +15,25 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('kana');
-            $table->string('tel')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('tel');
+            $table->string('email');
+            $table->datetime('email_verified_at')->nullable();
             $table->string('postcode');
             $table->string('address');
-            $table->date('birthday')->nullable();
+            $table->date('birthday');
             $table->tinyInteger('gender'); // 0男性, 1女性、2その他
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
-            $table->string('memo');
-            $table->integer('status')->default('1');
+            $table->datetime('created_at')->nullable();
+            $table->datetime('updated_at')->nullable();
+            $table->text('memo')->nullable();
+            $table->datetime('deleted_at')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->datetime('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {

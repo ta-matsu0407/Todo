@@ -37,14 +37,27 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('admin.dashboard')"
                                     :active="route().current('admin.dashboard')"
                                 >
-                                    管理者用ダッシュボード
+                                    講師用ダッシュボード
                                 </NavLink>
                                 <NavLink
                                     :href="route('admin.users.index')"
                                     :active="route().current('admin.users.index')"
                                 >
-                                    ユーザー一覧
+                                    生徒一覧
                                 </NavLink>
+                                <NavLink
+                                    :href="route('admin.todos.index')"
+                                    :active="route().current('admin.todos.index')"
+                                >
+                                    宿題一覧
+                                </NavLink>
+                                <NavLink
+                                    :href="route('admin.expired-users.index')"
+                                    :active="route().current('admin.expired-users.index')"
+                                >
+                                    削除済み生徒一覧
+                                </NavLink>
+
                             </div>
                         </div>
 
@@ -150,14 +163,27 @@ const showingNavigationDropdown = ref(false);
                             :href="route('admin.dashboard')"
                             :active="route().current('admin.dashboard')"
                         >
-                        管理者用ダッシュボード
+                        講師用ダッシュボード
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('admin.users.index')"
                             :active="route().current('admin.users.index')"
                         >
-                            ユーザー一覧
+                            生徒一覧
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('admin.todos.index')"
+                            :active="route().current('admin.todos.index')"
+                        >
+                            宿題一覧
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('admin.expired-users.index')"
+                            :active="route().current('admin.expired-users.index')"
+                        >
+                            削除済み生徒一覧
+                        </ResponsiveNavLink>
+
                     </div>
 
                     <!-- Responsive Settings Options -->

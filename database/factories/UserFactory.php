@@ -25,6 +25,8 @@ class UserFactory extends Factory
     {
         $tel = str_replace('-', '', fake()->phoneNumber());
         $address = mb_substr(fake()->address(), 9);
+        // 電話番号-> ハイフンを削除
+        // 住所-> 郵便番号と半角スペースをカット,何文字目から使用するか
 
         return [
             'name' => fake()->name(),
@@ -38,7 +40,7 @@ class UserFactory extends Factory
             'gender' => fake()->numberBetween(0, 2),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'memo' => fake()->realText(50),
+            'memo' => fake()->realText(15),
         ];
     }
 

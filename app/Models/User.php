@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Todo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +29,6 @@ class User extends Authenticatable
         'gender',
         'password',
         'memo',
-        'status',
     ];
 
     /**
@@ -55,20 +55,23 @@ class User extends Authenticatable
     }
 
     public function scopeSearchUsers($query, $input = null)
-
     {
         if (!empty($input)) {
-            if (in_array($input, ['実施', '完了'])) {
-                return $query->where('status', $input);
-            }
-            return $query->where('kana', 'like', $input . '%');
+            return $query->where('name', 'like', $input . '%');
         }
 
         return $query;
     }
 
-    // public function todo()
-    // {
-    //     return $this->hasMany(Todo::class);
-    // }
+    public function todos()
+    {
+        return $this->hasMany(Todo::class);
+    }
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+        'deleted_at' => 'datetime:Y-m-d H:i:s',
+        // 日付のフォーマット設定 を変更
+    ];
 }

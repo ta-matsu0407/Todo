@@ -1,8 +1,8 @@
 <script setup>
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive, computed } from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+import { reactive, computed, watch} from 'vue'
+import { router } from '@inertiajs/core'
 import { Core as YubinBangoCore } from "yubinbango-core2";
 
 defineProps({
@@ -32,18 +32,26 @@ const fetchAddress = () => {
 const passwordsMatch = computed(() => form.password === form.password_confirmation);
 
 const storeUser = () => {
-Inertia.post('/admin/users', form)
+    router.post('/admin/users', form)
 }
+
+// 郵便番号の長さをリアルタイムでチェック
+watch(() => form.postcode, (newVal) => {
+    if (newVal.length > 7) {
+        alert('郵便番号は7桁以内で入力してください');
+        form.postcode = newVal.slice(0, 7);
+    }
+});
 
 </script>
 
 <template>
-    <Head title="ユーザー登録" />
+    <Head title="新規生徒登録" />
 
-    <adminAuthenticatedLayout>
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                ユーザー登録
+                新規生徒登録
             </h2>
         </template>
 
@@ -58,7 +66,7 @@ Inertia.post('/admin/users', form)
                                         <div class="flex flex-wrap -m-2">
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="name" class="leading-7 text-sm text-gray-600">氏名</label>
+                                                    <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
                                                     <input type="text" id="name" name="name" v-model="form.name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.name">{{ errors.name }}</div>
                                                 </div>
@@ -79,6 +87,7 @@ Inertia.post('/admin/users', form)
                                                     <label for="gender1" class="ml-2 mr-10">女性</label>
                                                     <input type="radio" id="gender2" name="gender" v-model="form.gender" value="2" >
                                                     <label for="gender2" class="ml-2 mr-10">その他</label>
+                                                    <div v-if="errors.gender">{{ errors.gender }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -132,7 +141,7 @@ Inertia.post('/admin/users', form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">備考</label>
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                                                 </div>
                                             </div>
@@ -148,5 +157,5 @@ Inertia.post('/admin/users', form)
                 </div>
             </div>
         </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>

@@ -13,13 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(1000)->create();
-        // Todo::factory(100)->create();
+        User::factory(30)->create();
+        Todo::factory(50)->create();
 
         $this->call([
-            // UserSeeder::class,
             AdminSeeder::class,
-            // TodoSeeder::class,
         ]);
     }
 }

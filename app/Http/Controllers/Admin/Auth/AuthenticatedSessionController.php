@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -19,7 +18,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Admin/Auth/Login', [
+        return Inertia::render('Admin/Auth/Login',[
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);
@@ -32,7 +31,7 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $request->session()->regenerate(); //セッション情報を再発行
 
         return redirect()->intended(route('admin.dashboard', absolute: false));
     }

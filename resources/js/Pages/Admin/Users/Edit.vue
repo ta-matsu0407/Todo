@@ -1,8 +1,9 @@
 <script setup>
-import adminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive, computed} from 'vue'
-import { router as Inertia } from '@inertiajs/core';
+import { reactive, computed, watch} from 'vue'
+import { router } from '@inertiajs/core';
+import { Core as YubinBangoCore } from "yubinbango-core2";
 
 const props = defineProps({
     user: Object,
@@ -19,30 +20,37 @@ const form = reactive({
     birthday: props.user.birthday,
     gender: props.user.gender,
     email: props.user.email,
-    password: "",
-    password_confirmation: "",
     memo: props.user.memo,
-    status: props.user.status,
 })
 
-const passwordsMatch = computed(() => form.password === form.password_confirmation);
+// 数字を文字に変換 第１引数が郵便番号、第２がコールバックで引数に住所
+const fetchAddress = () => {
+    new YubinBangoCore(String(form.postcode), (value) => {
+    form.address = value.region + value.locality + value.street
+    })
+}
 
 const updateUser = id => {
-    if (!passwordsMatch.value) {
-        alert("パスワードが一致しません。");
-        return;
-    }
-Inertia.put(route('admin.users.update', { user: id}), form)
+    router.put(route('admin.users.update', { user: id}), form)
 }
+
+// 郵便番号の長さをリアルタイムでチェック
+watch(() => form.postcode, (newVal) => {
+    if (newVal.length > 7) {
+        alert('電話番号は7桁以内で入力してください');
+        form.postcode = newVal.slice(0, 7);
+    }
+});
 
 </script>
 
 <template>
-    <Head title="ユーザー編集" />
-    <adminAuthenticatedLayout>
+    <Head title="生徒情報編集" />
+
+    <AdminAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ user.name }} さんの編集画面
+                {{ user.name }} さんの情報編集画面
             </h2>
         </template>
         <div class="py-12">
@@ -56,7 +64,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                         <div class="flex flex-wrap -m-2">
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="name" class="leading-7 text-sm text-gray-600">氏名</label>
+                                                    <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
                                                     <input type="text" id="name" name="name" v-model="form.name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.name">{{ errors.name }}</div>
                                                 </div>
@@ -96,7 +104,7 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="postcode" class="leading-7 text-sm text-gray-600">郵便番号</label>
-                                                    <input type="postcode" id="postcode" name="postcode" v-model="form.postcode" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <input type="postcode" id="postcode" name="postcode" @change="fetchAddress" v-model="form.postcode" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.postcode">{{ errors.postcode }}</div>
                                                 </div>
                                             </div>
@@ -110,41 +118,14 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="birthday" class="leading-7 text-sm text-gray-600">誕生日</label>
-                                                    <input type="birthday" id="birthday" name="birthday" v-model="form.birthday" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <input type="date" id="birthday" name="birthday" v-model="form.birthday" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.birthday">{{ errors.birthday }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
-                                                    <input type="password" id="password" name="password" v-model="form.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                    <div v-if="errors.password">{{ errors.password }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="password_confirmation" class="leading-7 text-sm text-gray-600">パスワード（確認用）</label>
-                                                    <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                    <div v-if="!passwordsMatch" class="text-red-500 text-sm">パスワードが一致しません。</div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="memo" class="leading-7 text-sm text-gray-600">やること</label>
+                                                    <label for="memo" class="leading-7 text-sm text-gray-600">備考</label>
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="status" class="leading-7 text-sm text-gray-800">状況</label>
-                                                    <select
-                                                        id="status"
-                                                        name="status"
-                                                        v-model="form.status"
-                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        <option value="1" >実施中</option>
-                                                        <option value="0">完了</option>
-                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -159,5 +140,5 @@ Inertia.put(route('admin.users.update', { user: id}), form)
                 </div>
             </div>
         </div>
-    </adminAuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>
