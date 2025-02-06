@@ -1,9 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
 import { router as Inertia } from '@inertiajs/core';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
 const props = defineProps({
     user: Object,
@@ -19,7 +18,6 @@ const form = reactive({
 const updateUser = id => {
 Inertia.put(route('user.update', { user: id}), form)
 }
-//route:listをみると、updateはPUTとある
 
 </script>
 
@@ -39,10 +37,6 @@ Inertia.put(route('user.update', { user: id}), form)
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
                             <form @submit.prevent="updateUser(form.id)">
-                                <!-- 更新ボタンを押したらsubmitが走り、formが走り、updateUserメソッドが走る -->
-                                <!-- sectionタグを目印にformタグ -->
-                                <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
-                                <!-- updateUser：scriptで設定したメソッドを実行 -->
                                 <div class="container px-5 py-8 mx-auto">
                                     <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                         <div class="flex flex-wrap -m-2">
@@ -57,12 +51,6 @@ Inertia.put(route('user.update', { user: id}), form)
                                             <div class="p-2 w-full">
                                                 <div class="relative">
                                                     <label for="status" class="leading-7 text-lg font-semibold text-gray-800">状況</label>
-                                                    <!-- <input type="radio" id="status" name="status" v-model="form.status" value="1" > -->
-                                                    <!-- v-model="form.status"として、form オブジェクトの status プロパティにバインド -->
-                                                    <!-- value="1":statusが1の時にチェックが入る -->
-                                                    <!-- <label class="ml-2 mr-10">実施中</label>
-                                                    <input type="radio" id="status" name="status" v-model="form.status" value="0" >
-                                                    <label class="ml-2 mr-10">完了</label> -->
                                                     <select
                                                         id="status"
                                                         name="status"

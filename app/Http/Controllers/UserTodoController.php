@@ -6,37 +6,25 @@ use App\Models\Todo;
 use Inertia\Inertia;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoUserRequest;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
 class UserTodoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        // ログインユーザーのIDを取得
-    $userId = (int) Auth::user()->id;
+        $userId = (int) Auth::user()->id;
 
-    // 自分のTodoリストを取得（最新順 & ページネーション)
-    // with('user') を使って user の情報も取得
-    $todos = Todo::with('user')
-                ->where('user_id', $userId)
-                ->latest()
-                ->paginate(10);
-
-    // dd($todos->toArray());
+        $todos = Todo::with('user')
+                    ->where('user_id', $userId)
+                    ->latest()
+                    ->paginate(10);
 
         return Inertia::render('User/Todos/Index', [
             'todos' => $todos
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $userId = (int) Auth::user()->id;
@@ -44,15 +32,10 @@ class UserTodoController extends Controller
         return Inertia::render('User/Todos/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTodoRequest $request)
     {
-        // dd($request->all());
-
         Todo::create([
-            'user_id' => Auth::id(), // ログインしているユーザーのIDを保存
+            'user_id' => Auth::id(),
             'homework' => $request->homework,
             'deadline' => $request->deadline,
             'memo' => $request->memo,
@@ -65,8 +48,6 @@ class UserTodoController extends Controller
             'status' => 'success'
         ]);
     }
-
-    // Todoのステータスを変更
 
     public function updateStatus(UpdateTodoUserRequest $request, Todo $todo)
     {

@@ -2,26 +2,20 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive} from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 
 const props = defineProps({
     errors: Object,
     'users' : Array
 })
-// コントローラーからerrorsというオブジェクトが渡ってくる
 
 const form = reactive({
-    name: null, //v-model="form.name"で中身を見れる 入力毎に値が変化する
+    name: null,
     homework: null,
     deadline: null,
     memo: null,
     user_id: null,
 })
-
-// const storeTodo = () => {
-//     Inertia.post('/admin/todos', form)
-// }
 
 const storeTodo = () => {
     router.post('/admin/todos', form)
@@ -46,7 +40,6 @@ const storeTodo = () => {
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
                             <form @submit.prevent="storeTodo">
-                                <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
                                 <div class="container px-5 py-8 mx-auto">
                                     <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                         <div class="flex flex-wrap -m-2">

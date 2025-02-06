@@ -2,20 +2,15 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 
-
-//コントローラから渡ってくる情報をdefinePropsで受けて、それを変数に入れておく
 const props = defineProps({
     todo: Object,
     errors: Object
 })
 
-// 変数で渡したものをreactiveでリアクティブ対応にする
 const form = reactive({
     id: props.todo.id,
-    // name: props.todo.name,
     homework: props.todo.homework,
     deadline: props.todo.deadline,
     memo: props.todo.memo,
@@ -23,15 +18,8 @@ const form = reactive({
 })
 
 const updateTodo = id => {
-    // if (!passwordsMatch.value) {
-    //     alert("パスワードが一致しません。");
-    //     return;
-    // }
-// Inertia.put(route('admin.todos.update', { todo: id}), form)
-// }
-router.put(route('admin.todos.update', { todo: id}), form)
+    router.put(route('admin.todos.update', { todo: id}), form)
 }
-//route:listをみると、updateはPUTとある
 
 </script>
 
@@ -89,14 +77,12 @@ router.put(route('admin.todos.update', { todo: id}), form)
                                                         id="status"
                                                         name="status"
                                                         v-model="form.status"
-                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                    >
+                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                         <option value="1" >実施中</option>
                                                         <option value="0">完了</option>
                                                     </select>
                                                 </div>
                                             </div>
-
                                             <div class="p-2 w-full">
                                                 <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                                             </div>

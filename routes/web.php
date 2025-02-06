@@ -16,30 +16,10 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/dashboard', [UserController::class, 'show'])->name('user.show');
-
-// Route::middleware(['auth:users', 'verified'])->group(function () {
-//     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-// });
-
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth:users', 'verified'])->name('dashboard');
-
-// Route::middleware('auth:users')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
 // 認証が必要なルートをまとめる
 Route::middleware(['auth:users', 'verified'])->group(function () {
 
-    // カスタマイズしたユーザーダッシュボードへのルート
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    // Route::get('/edit/{user}', [UserDashboardController::class, 'edit'])->name('user.edit');
-    // Route::put('/edit/{user}', [UserDashboardController::class, 'update'])->name('user.update');
-
 
     // プロフィール編集関連のルート
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,7 +28,7 @@ Route::middleware(['auth:users', 'verified'])->group(function () {
 });
 
 Route::resource('todos', UserTodoController::class)
-->middleware('auth:users', 'verified');
+    ->middleware('auth:users', 'verified');
 
 Route::patch('/todos/{todo}/status', [UserTodoController::class, 'updateStatus'])
     ->name('user.todos.updateStatus')

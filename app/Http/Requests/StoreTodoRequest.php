@@ -25,7 +25,6 @@ class StoreTodoRequest extends FormRequest
             'homework' => ['required', 'max:255'],
             'deadline' => ['required', 'date'],
             'memo' => ['max:255'],
-            // 'user_id' => ['required'],
         ];
     }
 }

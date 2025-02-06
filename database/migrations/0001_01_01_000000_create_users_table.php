@@ -24,15 +24,10 @@ return new class extends Migration
             $table->tinyInteger('gender'); // 0男性, 1女性、2その他
             $table->string('password');
             $table->rememberToken();
-            // $table->timestamps();
             $table->datetime('created_at')->nullable();
             $table->datetime('updated_at')->nullable();
             $table->text('memo')->nullable();
-            // $table->integer('status')->default('1');
-            // $table->softDeletes();
-            // softDeleteは、timestamp型を作成するため、datetimeを使用する場合は以下
             $table->datetime('deleted_at')->nullable();
-            // $table->date('deadline')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

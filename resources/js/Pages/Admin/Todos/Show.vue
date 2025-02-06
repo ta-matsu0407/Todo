@@ -1,21 +1,12 @@
 <script setup>
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 
 
 defineProps({
-    // user: Object,
     todo: Object,
-
 })
-
-// const deleteTodo = id => {
-//     Inertia.delete(route('admin.todos.destroy', {todo: id}), {
-//     onBefore: () => confirm('本当に削除しますか?')
-//     })
-// }
 
 const deleteTodo = id => {
     router.delete(route('admin.todos.destroy', {todo: id}), {
@@ -23,7 +14,6 @@ const deleteTodo = id => {
     })
 }
 
-// アロー関数で引数が１つの場合は()を省略できる
 </script>
 
 <template>
@@ -48,7 +38,6 @@ const deleteTodo = id => {
                                                 <div class="relative">
                                                     <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
                                                     <div id="name" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                    <!-- 表示させるだけなので、input→divタグに -->
                                                         {{ todo.user.name }}
                                                     </div>
                                                 </div>
@@ -73,7 +62,7 @@ const deleteTodo = id => {
                                                 <div class="relative">
                                                     <label for="memo" class="leading-7 text-sm text-gray-600">メモ</label>
                                                     <div id="memo" style="white-space: pre-wrap;" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">
-                                                        <!-- style="white-space: pre-wrap;":改行がそのまま表示される -->
+                                                        <!-- style="white-space: pre-wrap;":改行をそのまま表示 -->
                                                         {{ todo.memo }}
                                                     </div>
                                                 </div>
@@ -89,7 +78,6 @@ const deleteTodo = id => {
                                             </div>
                                             <div class="p-2 w-full">
                                                 <Link as="button" :href="route('admin.todos.edit', { todo: todo.id})" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集する</Link>
-                                                <!-- Linkのみだとaタグ、as="button"つけてボタンに -->
                                             </div>
                                             <div class="p-2 w-full">
                                                 <button @click="deleteTodo(todo.id)" class="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除する</button>
