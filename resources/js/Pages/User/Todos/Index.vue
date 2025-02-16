@@ -55,8 +55,8 @@ const updateStatus = (todo, event) => {
                                     <table class="table-auto w-full text-left whitespace-no-wrap">
                                         <thead>
                                             <tr>
-                                                <!-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/12">ID</th> -->
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-5/12">宿題</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-0.5/12">ID</th>
+                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-4.5/12">宿題</th>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-4/12">備考</th>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-2/12">期限</th>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/12">状況</th>
@@ -64,10 +64,10 @@ const updateStatus = (todo, event) => {
                                         </thead>
                                         <tbody>
                                             <tr v-for="todo in todos.data" :key="todo.id">
-                                                <!-- <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400 hover:underline" :href="route('todos.show', { todo: todo.id})">
                                                         {{ todo.id }}</Link>
-                                                </td> -->
+                                                </td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.homework }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.memo }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.deadline }}</td>

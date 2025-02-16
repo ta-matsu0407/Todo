@@ -6,6 +6,7 @@ use App\Models\Todo;
 use Inertia\Inertia;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoUserRequest;
+use App\Http\Requests\UpdateTodoStatusRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,9 +67,55 @@ class UserTodoController extends Controller
         ]);
     }
 
+    public function show(Todo $todo)
+    {
+        // dd($todo);
+        $todo->load('user');
+
+        return Inertia::render('User/Todos/Show', [
+            'todo' => $todo
+        ]);
+    }
+
+    public function edit(Todo $todo)
+    {
+        $todo->load('user');
+
+        return Inertia::render('User/Todos/Edit', [
+            'todo' => $todo
+        ]);
+    }
+
+    public function update(UpdateTodoUserRequest $request, Todo $todo)
+    {
+        $todo->homework = $request->homework;
+        $todo->deadline = $request->deadline;
+        $todo->memo = $request->memo;
+        $todo->save();
+
+        return to_route('todos.index')
+        ->with([
+            'message' => '更新しました。',
+            'status' => 'success'
+        ]);
+
+    }
+
+    public function destroy(Todo $todo)
+    {
+        $todo->delete();
+
+        return to_route('todos.index')
+        ->with([
+            'message' => '削除しました。',
+            'status' => 'danger'
+        ]);
+    }
+
+
     // Todoのステータスを変更
 
-    public function updateStatus(UpdateTodoUserRequest $request, Todo $todo)
+    public function updateStatus(UpdateTodoStatusRequest $request, Todo $todo)
     {
         $todo->update([
             'status' => $request->status

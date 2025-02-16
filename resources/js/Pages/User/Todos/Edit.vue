@@ -1,5 +1,5 @@
 <script setup>
-import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
 import { router as Inertia } from '@inertiajs/core';
@@ -17,7 +17,6 @@ const form = reactive({
     homework: props.todo.homework,
     deadline: props.todo.deadline,
     memo: props.todo.memo,
-    status: props.todo.status,
 })
 
 const updateTodo = id => {
@@ -25,7 +24,7 @@ const updateTodo = id => {
     //     alert("パスワードが一致しません。");
     //     return;
     // }
-Inertia.put(route('admin.todos.update', { todo: id}), form)
+Inertia.put(route('todos.update', { todo: id}), form)
 }
 //route:listをみると、updateはPUTとある
 
@@ -34,7 +33,7 @@ Inertia.put(route('admin.todos.update', { todo: id}), form)
 <template>
     <Head title="宿題編集" />
 
-    <AdminAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 {{ todo.user.name }} さんの宿題編集画面
@@ -52,24 +51,9 @@ Inertia.put(route('admin.todos.update', { todo: id}), form)
                                         <div class="flex flex-wrap -m-2">
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="name" class="leading-7 text-sm text-gray-600">生徒名</label>
-                                                    <div id="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        {{ todo.user.name }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
                                                     <label for="homework" class="leading-7 text-sm text-gray-600">宿題</label>
                                                     <input type="homework" id="homework" name="homework" v-model="form.homework" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     <div v-if="errors.homework">{{ errors.homework }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="deadline" class="leading-7 text-sm text-gray-600">期限</label>
-                                                    <input type="date" id="birthday" name="deadline" v-model="form.deadline" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                    <div v-if="errors.deadline">{{ errors.deadline }}</div>
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
@@ -80,19 +64,11 @@ Inertia.put(route('admin.todos.update', { todo: id}), form)
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="relative">
-                                                    <label for="status" class="leading-7 text-sm text-gray-800">状況</label>
-                                                    <select
-                                                        id="status"
-                                                        name="status"
-                                                        v-model="form.status"
-                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                    >
-                                                        <option value="1" >実施中</option>
-                                                        <option value="0">完了</option>
-                                                    </select>
+                                                    <label for="deadline" class="leading-7 text-sm text-gray-600">期限</label>
+                                                    <input type="date" id="birthday" name="deadline" v-model="form.deadline" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                    <div v-if="errors.deadline">{{ errors.deadline }}</div>
                                                 </div>
                                             </div>
-
                                             <div class="p-2 w-full">
                                                 <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                                             </div>
@@ -105,5 +81,5 @@ Inertia.put(route('admin.todos.update', { todo: id}), form)
                 </div>
             </div>
         </div>
-    </AdminAuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
