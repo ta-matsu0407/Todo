@@ -53,6 +53,15 @@ watch(() => form.postcode, (newVal) => {
         form.postcode = newVal.slice(0, 7);
     }
 });
+// watch() は Vue のリアクティブなデータ（変数）の変化を監視 するための関数です。
+
+// watch(() => form.postcode, (newVal) => { ... })
+// この部分は form.postcode の値が変わるたびに関数が実行される という意味です。
+
+// () => form.postcode
+// → これが 「監視対象」 を指定する部分で、form.postcode の変化を監視します。
+// (newVal) => { ... }
+// → form.postcode の値が変わると newVal に新しい値が渡されて、中の処理が実行されます。
 
 </script>
 

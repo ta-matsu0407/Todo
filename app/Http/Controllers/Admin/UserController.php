@@ -218,6 +218,7 @@ class UserController extends Controller
         // User::onlyTrashed()->findOrFail($id)->forceDelete();
 
         $user = User::onlyTrashed()->findOrFail($id);
+        // findOrFail 一致するidが見つからなかった場合は、エラー404を返すa
 
         // 関連する todos も完全削除
         $user->todos()->forceDelete();
