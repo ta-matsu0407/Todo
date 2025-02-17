@@ -9,10 +9,11 @@ use App\Http\Requests\UpdateTodoUserRequest;
 use App\Http\Requests\UpdateTodoStatusRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserTodoController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -69,6 +70,8 @@ class UserTodoController extends Controller
 
     public function show(Todo $todo)
     {
+        $this->authorize('view', $todo);
+
         // dd($todo);
         $todo->load('user');
 
