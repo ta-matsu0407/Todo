@@ -56,6 +56,7 @@ class TodoController extends Controller
             'memo' => $request->memo,
             'status' => '1', // デフォルトで "未完了" に設定
             'deadline' => $request->deadline,
+            'created_by_type' => 'admin', // 固定
         ]);
 
         // 一覧ページにリダイレクト
@@ -64,7 +65,7 @@ class TodoController extends Controller
             'message' => '登録しました。',
             'status' => 'success'
         ]);
-}
+    }
 
     /**
      * Display the specified resource.

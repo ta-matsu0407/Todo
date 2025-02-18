@@ -64,9 +64,20 @@ const updateStatus = (todo, event) => {
                                         </thead>
                                         <tbody>
                                             <tr v-for="todo in todos.data" :key="todo.id">
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                <!-- <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400 hover:underline" :href="route('todos.show', { todo: todo.id})">
                                                         {{ todo.id }}</Link>
+                                                </td> -->
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    <!-- Userが作成したTodoならリンクを表示 -->
+                                                    <Link
+                                                        v-if="todo.created_by_type === 'user'" class="text-blue-400 hover:underline"
+                                                        :href="route('todos.show', { todo: todo.id })">
+                                                        {{ todo.id }}
+                                                    </Link>
+
+                                                    <!--　Adminが作成したTodoなら、リンクなし -->
+                                                    <span v-else>{{ todo.id }}</span>
                                                 </td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.homework }}</td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.memo }}</td>

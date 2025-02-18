@@ -16,6 +16,7 @@ class Todo extends Model
         'memo',
         'status',
         'deadline',
+        'created_by_type'
     ];
 
     public function scopeSearchTodos($query, $input = null)

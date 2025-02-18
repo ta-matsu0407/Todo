@@ -59,6 +59,7 @@ class UserTodoController extends Controller
             'deadline' => $request->deadline,
             'memo' => $request->memo,
             'status' => '1',
+            'created_by_type' => 'user', // 固定
         ]);
 
         return to_route('todos.index')

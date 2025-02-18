@@ -21,7 +21,7 @@ class TodoPolicy
      */
     public function view(User $user, Todo $todo): bool
     {
-        return $user->id === $todo->user_id;
+        return $todo->created_by_type === 'user' && $user->id === $todo->user_id;
     }
 
     /**
