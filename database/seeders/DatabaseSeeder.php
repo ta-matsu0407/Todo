@@ -14,7 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(30)->create();
+        // User::factory(25000)->create();
+        $chunkSize = 10000; // 1回の挿入を1000件ずつにする
+        $totalRecords = 300000;
+
+        for ($i = 0; $i < $totalRecords / $chunkSize; $i++) {
+            User::factory()->count($chunkSize)->create();
+        }
         Todo::factory(50)->create();
         // User::factory(10)->create();
 

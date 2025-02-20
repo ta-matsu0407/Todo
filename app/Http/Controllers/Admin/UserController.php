@@ -238,7 +238,7 @@ class UserController extends Controller
     {
         $fileName = 'users.csv';
 
-        $users = User::all();
+        // $users = User::all();
 
         $headers = [
             "Content-Type" => "text/csv; charset=Shift_JIS", // Shift_JIS を指定
@@ -247,7 +247,7 @@ class UserController extends Controller
             // ダウンロード時のファイル名 を指定
         ];
 
-        $callback = function () use ($users) {
+        $callback = function () {
             $file = fopen('php://output', 'w');
 
             $header = [
@@ -266,25 +266,28 @@ class UserController extends Controller
             mb_convert_variables('SJIS-win', 'UTF-8', $header);
             fputcsv($file, $header);
 
-            foreach ($users as $user) {
-                $users_data = [
-                    $user->id,
-                    $user->name,
-                    $user->kana,
-                    // strval($user->tel), // 明示的に文字列化
-                    '"' . $user->tel . '"',
-                    $user->email,
-                    $user->postcode,
-                    $user->address,
-                    $user->birthday,
-                    $user->memo,
-                    $user->created_at,
-                ];
-                // 文字コード変換
-                mb_convert_variables('SJIS-win', 'UTF-8', $users_data);
+             // チャンクを使ってデータを分割取得
+            User::chunk(10000, function ($users) use ($file) {
+                foreach ($users as $user) {
+                    $users_data = [
+                        $user->id,
+                        $user->name,
+                        $user->kana,
+                        // strval($user->tel), // 明示的に文字列化
+                        '"' . $user->tel . '"',
+                        $user->email,
+                        $user->postcode,
+                        $user->address,
+                        $user->birthday,
+                        $user->memo,
+                        $user->created_at,
+                    ];
+                    // 文字コード変換
+                    mb_convert_variables('SJIS-win', 'UTF-8', $users_data);
 
-                fputcsv($file, $users_data);
-            }
+                    fputcsv($file, $users_data);
+                }
+            });
             fclose($file);
         };
         return new StreamedResponse($callback, 200, $headers);
