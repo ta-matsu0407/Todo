@@ -6,7 +6,7 @@ import Pagination from '@/Components/Pagination.vue'
 import { ref } from 'vue'
 // import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
-
+import SearchUsers from '@/Components/SearchBar.vue';
 
 defineProps({
     users: Object,
@@ -21,9 +21,9 @@ const search = ref('')
 // リアクティブとは、データが変わるとそれに紐づいた UI が自動的に更新される
 
 // ref で定義した変数の値にアクセスしたり更新する際には、.value が必要
-const searchUsers = () => {
+const searchUsers = (users) => {
     // Inertia.get(route('admin.users.index', { search: search.value }))
-    router.get(route('admin.users.index', { search: search.value }))
+    router.get(route('admin.users.index', { search: users }))
 
 }
 // Inertia.get クライアント (ブラウザ) からサーバーへリクエストを送信
@@ -59,17 +59,28 @@ const exportCsv = () => {
                             <div class="container px-5 py-8 mx-auto">
                                 <!-- py：上下方向のパディング -->
                                 <FlashMessage />
+                                <!-- 検索フォーム (子コンポーネント) -->
+                                <SearchUsers placeholder="生徒名で検索" @search="searchUsers">
+                                    <!-- 親から extra スロットにボタンを挿入 -->
+                                    <template #extra>
+                                        <Link as="button" :href="route('admin.users.create')"
+                                            class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6
+                                            focus:outline-none hover:bg-indigo-600 rounded">
+                                            新規生徒登録
+                                        </Link>
+                                    </template>
+                                </SearchUsers>
                                 <!-- importで読み込むことで、コンポーネントを使えるようにする -->
-                                <div class="flex pl-4 my-4 w-full mx-auto">
-                                    <div class="flex items-center space-x-2">
+                                <!-- <div class="flex pl-4 my-4 w-full mx-auto"> -->
+                                    <!-- <div class="flex items-center space-x-2">
                                         <input type="text" name="search" v-model="search" placeholder="生徒名で検索" class="flex-1 bg-gray-100 border border-gray-300 rounded px-4 py-2 text-gray-700">
                                         <button class="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 " @click="searchUsers">
                                             検索
                                         </button>
-                                    </div>
-                                    <Link as="button" :href="route('admin.users.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規生徒登録</Link>
+                                    </div> -->
+                                    <!-- <Link as="button" :href="route('admin.users.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規生徒登録</Link> -->
                                     <!-- Linkのみだとaタグになるが、Link as="button"とするとbuttonタグ -->
-                                </div>
+                                <!-- </div> -->
                                 <!-- <div class="lg:w-2/3 w-full mx-auto overflow-auto"> -->
                                 <div class="w-full overflow-auto">
                                 <!-- overflow-x-auto → 横スクロールを可能にして、内容が収まらないときにスクロールできるように -->
@@ -91,7 +102,8 @@ const exportCsv = () => {
                                                 <!-- v-forを回すときは :keyもつける(ソートや削除などで順序変わっても状態を保持するため) -->
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400 hover:underline" :href="route('admin.users.show', { user: user.id})">
-                                                        {{ user.id }}</Link>
+                                                        {{ user.id }}
+                                                    </Link>
                                                 </td>
                                                 <!-- Linkコンポーネントで挟むことで、idをリンク化 -->
                                                 <!-- { user: user.id }：ルートパラメータに渡すデータ 例えば、user.id が 1 なら、/admin/users/1 というURLが生成 -->

@@ -6,6 +6,7 @@ import Pagination from '@/Components/Pagination.vue'
 import { ref } from 'vue'
 // import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
+import SearchTodos from '@/Components/SearchBar.vue'
 
 
 defineProps({
@@ -18,8 +19,8 @@ const search = ref('')
 //     Inertia.get(route('admin.todos.index', { search: search.value }))
 // }
 
-const searchTodos = () => {
-    router.get(route('admin.todos.index', { search: search.value }))
+const searchTodos = (todos) => {
+    router.get(route('admin.todos.index', { search: todos }))
 }
 
 
@@ -41,15 +42,16 @@ const searchTodos = () => {
                         <section class="text-gray-600 body-font">
                             <div class="container px-5 py-8 mx-auto">
                                 <FlashMessage />
-                                <div class="flex pl-4 my-4 w-full mx-auto">
-                                    <div class="flex items-center space-x-2">
-                                        <input type="text" name="search" v-model="search" placeholder="生徒名・状況で検索" class="flex-1 bg-gray-100 border border-gray-300 rounded px-4 py-2 text-gray-700">
-                                        <button class="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 " @click="searchTodos">
-                                            検索
-                                        </button>
-                                    </div>
-                                        <Link as="button" :href="route('admin.todos.create')" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規宿題登録</Link>
-                                    </div>
+                                <SearchTodos placeholder="生徒名・状況で検索" @search="searchTodos">
+                                    <template #extra>
+                                        <Link as="button" :href="route('admin.todos.create')"
+                                            class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6
+                                            focus:outline-none hover:bg-indigo-600 rounded">
+                                            新規宿題登録
+                                        </Link>
+                                    </template>
+                                </SearchTodos>
+                                <!-- </div> -->
                                 <div class="w-full overflow-auto">
                                     <table class="table-auto w-full text-left whitespace-no-wrap">
                                         <thead>
@@ -65,7 +67,8 @@ const searchTodos = () => {
                                             <tr v-for="todo in todos.data" :key="todo.id" v-if="todos">
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400 hover:underline" :href="route('admin.todos.show', { todo: todo.id})">
-                                                        {{ todo.id }}</Link>
+                                                        {{ todo.id }}
+                                                    </Link>
                                                 </td>
                                                 <td v-if="todo.user" class="border-b-2 border-gray-200 px-4 py-3">{{ todo.user.name }}</td>
                                                 <td v-else="todo.user" class="border-b-2 border-gray-200 px-4 py-3">削除済み生徒</td>
@@ -82,9 +85,9 @@ const searchTodos = () => {
                             </div>
                             <Pagination class="mt-6" :links="todos.links"></Pagination>
                         </section>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
     </AdminAuthenticatedLayout>
 </template>
