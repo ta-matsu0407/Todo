@@ -6,11 +6,12 @@ defineProps({
     headers: Array,  // テーブルのヘッダー情報
     items: Array,    // 表示するデータ
     linkRoute: String, // リンクのルート
+    customStatus: String,
 });
 
 // ネストされたキーに対応する関数
 const getValue = (item, key) => {
-  return key.split('.').reduce((obj, prop) => obj?.[prop] ?? 'N/A', item);
+  return key.split('.').reduce((obj, prop) => obj?.[prop] ?? '', item);
 };
 </script>
 
@@ -30,7 +31,7 @@ const getValue = (item, key) => {
             <tbody>
                 <tr v-for="item in items" :key="item.id">
                     <td v-for="(header, index) in headers" :key="index" class="border-b-2 border-gray-200 px-4 py-3">
-                        <!-- IDリンク -->
+                        <!-- Admin側のIDリンク -->
                         <template v-if="header.key === 'id'">
                             <template v-if="linkRoute">
                                 <Link class="text-blue-400 hover:underline" :href="route(linkRoute, { id: item.id })">
@@ -41,10 +42,29 @@ const getValue = (item, key) => {
                                 {{ item.id }}
                             </template>
                         </template>
-                        <!-- ステータス表示 -->
+                        <!-- User側のIDリンク -->
+                        <template v-else-if="header.key === 'id_user'">
+                            <template v-if="item.created_by_type === 'user'">
+                                <Link
+                                     class="text-blue-400 hover:underline"
+                                    :href="route(linkRoute, { id: item.id })">
+                                    {{ item.id }}
+                                </Link>
+                            </template>
+                            <template v-else>
+                                {{ item.id }}
+                            </template>
+                        </template>
+
+                        <!-- カスタムステータス表示 -->
                         <template v-else-if="header.key === 'status'">
-                            <span v-if="item.status === 1" class="inline-block w-20 text-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
-                            <span v-if="item.status === 0" class="inline-block w-20 text-center text-red-700 bg-red-100 rounded-lg p-2">完了</span>
+                            <template v-if="customStatus">
+                                <slot :name="header.key" :item="item"></slot>
+                            </template>
+                            <template v-else>
+                                <span v-if="item.status === 1" class="inline-block w-20 text-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
+                                <span v-if="item.status === 0" class="inline-block w-20 text-center text-red-700 bg-red-100 rounded-lg p-2">完了</span>
+                            </template>
                         </template>
                         <!-- カスタムスロット -->
                         <template v-else-if="$slots[header.key]">
