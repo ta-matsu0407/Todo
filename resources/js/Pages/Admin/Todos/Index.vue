@@ -7,11 +7,20 @@ import { ref } from 'vue'
 // import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 import SearchTodos from '@/Components/SearchBar.vue'
-
+import { defineProps } from 'vue';
+import CommonTable from '@/Components/Table.vue';
 
 defineProps({
     todos: Object,
-})
+});
+
+const headers = [
+    { label: 'ID', key: 'id', class: 'w-1/12 rounded-tl rounded-bl' },
+    { label: '生徒名', key: 'user.name', class: 'w-2/12' },
+    { label: '宿題', key: 'homework', class: 'w-6/12' },
+    { label: '期限', key: 'deadline', class: 'w-1.5/12' },
+    { label: '状況', key: 'status', class: 'w-1.5/12' }
+];
 
 const search = ref('')
 
@@ -53,34 +62,11 @@ const searchTodos = (todos) => {
                                 </SearchTodos>
                                 <!-- </div> -->
                                 <div class="w-full overflow-auto">
-                                    <table class="table-auto w-full text-left whitespace-no-wrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/12">ID</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-2/12">生徒名</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-6/12">宿題</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1.5/12">期限</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1.5/12">状況</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="todo in todos.data" :key="todo.id" v-if="todos">
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    <Link class="text-blue-400 hover:underline" :href="route('admin.todos.show', { todo: todo.id})">
-                                                        {{ todo.id }}
-                                                    </Link>
-                                                </td>
-                                                <td v-if="todo.user" class="border-b-2 border-gray-200 px-4 py-3">{{ todo.user.name }}</td>
-                                                <td v-else="todo.user" class="border-b-2 border-gray-200 px-4 py-3">削除済み生徒</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.homework }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ todo.deadline }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    <span v-if="todo.status === 1" class="inline-block w-20 text-center text-green-700 bg-green-100 rounded-lg p-2">実施中</span>
-                                                    <span v-if="todo.status === 0" class="inline-block w-20 text-center text-red-700 bg-red-100 rounded-lg p-2">完了</span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <CommonTable
+                                        :headers="headers"
+                                        :items="todos.data"
+                                        linkRoute="admin.todos.show"
+                                    />
                                 </div>
                             </div>
                             <Pagination class="mt-6" :links="todos.links"></Pagination>
