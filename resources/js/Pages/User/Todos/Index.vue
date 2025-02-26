@@ -4,9 +4,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue';
 import Table from '@/Components/Table.vue';
+import { computed } from 'vue'
+
 
 // todos を props で受け取る
-defineProps({
+const props = defineProps({
     todos: Object,
 });
 
@@ -28,6 +30,20 @@ const headers = [
     { label: '期限', key: 'deadline',  class: 'w-2/12' },
     { label: '状況', key: 'status',  class: 'w-1/12' }
 ];
+
+// 完了している宿題の数を計算
+const completedCount = computed(() => props.todos.data.filter(todo => todo.status === 0).length);
+
+// 宿題の合計数を計算
+const totalCount = computed(() => props.todos.data.length);
+
+// 表示メッセージを計算
+const statusMessage = computed(() => {
+    return completedCount.value === totalCount.value
+        ? "すべての宿題を完了済です"
+        : `完了 ${completedCount.value} / ${totalCount.value}`;
+});
+
 </script>
 
 <template>
@@ -52,7 +68,9 @@ const headers = [
                                         新規宿題登録
                                     </Link>
                                 </div>
-
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-gray-700">{{ statusMessage }}</span>
+                                </div>
                                 <!-- Table コンポーネントを適用 -->
                                 <Table
                                     :headers="headers"
