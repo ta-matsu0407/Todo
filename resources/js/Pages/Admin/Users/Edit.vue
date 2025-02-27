@@ -1,10 +1,8 @@
 <script setup>
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive, computed, watch} from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
+import { reactive, watch} from 'vue'
 import { router } from '@inertiajs/core';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Core as YubinBangoCore } from "yubinbango-core2";
 
 //コントローラから渡ってくる情報をdefinePropsで受けて、それを変数に入れておく
@@ -24,10 +22,7 @@ const form = reactive({
     birthday: props.user.birthday,
     gender: props.user.gender,
     email: props.user.email,
-    // password: "", //パスワードは空で初期化
-    // password_confirmation: "", // 確認用パスワードを追加
     memo: props.user.memo,
-    // status: props.user.status,
 })
 
 // 数字を文字に変換 第１引数が郵便番号、第２がコールバックで引数に住所
@@ -37,14 +32,7 @@ const fetchAddress = () => {
     })
 }
 
-// const passwordsMatch = computed(() => form.password === form.password_confirmation);
-
 const updateUser = id => {
-    // if (!passwordsMatch.value) {
-    //     alert("パスワードが一致しません。");
-    //     return;
-    // }
-// Inertia.put(route('admin.users.update', { user: id}), form)
 router.put(route('admin.users.update', { user: id}), form)
 }
 //route:listをみると、updateはPUTとある
@@ -76,7 +64,6 @@ watch(() => form.postcode, (newVal) => {
                         <section class="text-gray-600 body-font relative">
                             <form @submit.prevent="updateUser(form.id)">
                                 <!-- 更新ボタンを押したらsubmitが走り、formが走り、updateUserメソッドが走る -->
-                                <!-- sectionタグを目印にformタグ -->
                                 <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
                                 <!-- updateUser：scriptで設定したメソッドを実行 -->
                                 <div class="container px-5 py-8 mx-auto">
@@ -143,20 +130,6 @@ watch(() => form.postcode, (newVal) => {
                                                     <div v-if="errors.birthday">{{ errors.birthday }}</div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
-                                                    <input type="password" id="password" name="password" v-model="form.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                    <div v-if="errors.password">{{ errors.password }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="password_confirmation" class="leading-7 text-sm text-gray-600">パスワード（確認用）</label>
-                                                    <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                    <div v-if="!passwordsMatch" class="text-red-500 text-sm">パスワードが一致しません。</div>
-                                                </div>
-                                            </div> -->
                                             <div class="p-2 w-full">
                                                 <!-- w-full:横幅いっぱい -->
                                                 <div class="relative">
@@ -164,24 +137,6 @@ watch(() => form.postcode, (newVal) => {
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                                                 </div>
                                             </div>
-                                            <!-- <div class="p-2 w-full">
-                                                <div class="relative">
-                                                    <label for="status" class="leading-7 text-sm text-gray-800">状況</label> -->
-                                                    <!-- <input type="radio" id="status" name="status" v-model="form.status" value="1" > -->
-                                                    <!-- v-model="form.status"として、form オブジェクトの status プロパティにバインド -->
-                                                    <!-- value="1":statusが1の時にチェックが入る -->
-                                                    <!-- <select
-                                                        id="status"
-                                                        name="status"
-                                                        v-model="form.status"
-                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                    >
-                                                        <option value="1" >実施中</option>
-                                                        <option value="0">完了</option>
-                                                    </select>
-                                                </div>
-                                            </div> -->
-
                                             <div class="p-2 w-full">
                                                 <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                                             </div>

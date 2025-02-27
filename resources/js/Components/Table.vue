@@ -15,7 +15,6 @@ const getValue = (item, key) => {
 };
 </script>
 
-
 <template>
     <div class="w-full overflow-auto">
         <table class="table-auto w-full text-left whitespace-no-wrap">

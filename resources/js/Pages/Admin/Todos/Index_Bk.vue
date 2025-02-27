@@ -3,26 +3,16 @@ import FlashMessage from '@/Components/FlashMessage.vue';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
-import { ref } from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 import SearchTodos from '@/Components/SearchBar.vue'
-
 
 defineProps({
     todos: Object,
 })
 
-const search = ref('')
-
-// const searchTodos = () => {
-//     Inertia.get(route('admin.todos.index', { search: search.value }))
-// }
-
 const searchTodos = (todos) => {
     router.get(route('admin.todos.index', { search: todos }))
 }
-
 
 </script>
 

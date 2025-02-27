@@ -2,7 +2,6 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 
 
@@ -15,7 +14,6 @@ const props = defineProps({
 // 変数で渡したものをreactiveでリアクティブ対応にする
 const form = reactive({
     id: props.todo.id,
-    // name: props.todo.name,
     homework: props.todo.homework,
     deadline: props.todo.deadline,
     memo: props.todo.memo,
@@ -23,12 +21,6 @@ const form = reactive({
 })
 
 const updateTodo = id => {
-    // if (!passwordsMatch.value) {
-    //     alert("パスワードが一致しません。");
-    //     return;
-    // }
-// Inertia.put(route('admin.todos.update', { todo: id}), form)
-// }
 router.put(route('admin.todos.update', { todo: id}), form)
 }
 //route:listをみると、updateはPUTとある
@@ -96,7 +88,6 @@ router.put(route('admin.todos.update', { todo: id}), form)
                                                     </select>
                                                 </div>
                                             </div>
-
                                             <div class="p-2 w-full">
                                                 <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                                             </div>

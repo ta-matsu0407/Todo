@@ -6,7 +6,6 @@ import Pagination from '@/Components/Pagination.vue';
 import Table from '@/Components/Table.vue';
 import { computed } from 'vue'
 
-
 // todos を props で受け取る
 const props = defineProps({
     todos: Object,

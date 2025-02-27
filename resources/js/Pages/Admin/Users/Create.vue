@@ -2,11 +2,8 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive, computed, watch} from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core'
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Core as YubinBangoCore } from "yubinbango-core2";
-//YubinBangoCoreのライブラリをインポート
 
 defineProps({
     errors: Object
@@ -80,10 +77,7 @@ watch(() => form.postcode, (newVal) => {
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
-                            <!-- <BreezeValidationErrors :errors="errors" /> -->
-                             <!-- ↑これはどんな時に？？ -->
                             <form @submit.prevent="storeUser">
-                                <!-- sectionタグを目印にformタグ -->
                                 <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
                                 <!-- storeUser：scriptで設定したメソッドを実行 -->
                                 <div class="container px-5 py-8 mx-auto">

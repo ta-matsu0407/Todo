@@ -1,9 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue'
 import { router as Inertia } from '@inertiajs/core';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
 const props = defineProps({
     user: Object,

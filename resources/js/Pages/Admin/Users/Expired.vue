@@ -1,9 +1,8 @@
 <script setup>
 import FlashMessage from '@/Components/FlashMessage.vue';
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
-import { ref } from 'vue'
 import { router } from '@inertiajs/core';
 import CommonTable from '@/Components/Table.vue';
 

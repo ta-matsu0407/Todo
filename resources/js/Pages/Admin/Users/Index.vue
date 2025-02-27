@@ -25,7 +25,6 @@ const search = ref('')
 // ref で定義した変数の値にアクセスしたり更新する際には、.value が必要
 const searchUsers = (users) => {
     router.get(route('admin.users.index', { search: users }))
-
 }
 // Inertia.get クライアント (ブラウザ) からサーバーへリクエストを送信
 // search パラメータを付けてリクエストを送信

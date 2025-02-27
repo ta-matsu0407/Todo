@@ -2,7 +2,6 @@
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { reactive} from 'vue'
-// import { router as Inertia } from '@inertiajs/core';
 import { router } from '@inertiajs/core';
 
 const props = defineProps({
@@ -19,14 +18,9 @@ const form = reactive({
     user_id: null,
 })
 
-// const storeTodo = () => {
-//     Inertia.post('/admin/todos', form)
-// }
-
 const storeTodo = () => {
     router.post('/admin/todos', form)
 }
-
 
 </script>
 
