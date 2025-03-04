@@ -19,7 +19,6 @@ const headers = [
 
 const deleteUser = id => {
     router.delete(route('admin.expired-users.destroy', {expiredUser: id}), {
-
     onBefore: () => confirm('本当に削除しますか?')
     })
 }

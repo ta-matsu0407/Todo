@@ -71,7 +71,7 @@ class UserTodoController extends Controller
 
     public function show(Todo $todo)
     {
-        $this->authorize('view', $todo);
+        $this->authorize('view', $todo); // Policy による権限チェック
 
         // dd($todo);
         $todo->load('user');

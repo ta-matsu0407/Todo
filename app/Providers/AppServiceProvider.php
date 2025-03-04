@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
-// use App\Policies\UserPolicy;
-// use App\Models\User;
+use App\Policies\TodoPolicy;
+use App\Models\Todo;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    // protected $policies = [
-    //     User::class => UserPolicy::class,
-    //  ];
+    protected $policies = [
+        Todo::class => TodoPolicy::class,
+        // Policyを登録
+    ];
 }
