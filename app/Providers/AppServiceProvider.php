@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Policies\TodoPolicy;
+use App\Models\Todo;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Register any application services.
      */
@@ -26,4 +29,9 @@ class AppServiceProvider extends ServiceProvider
             config(['session.cookie' => config('session.cookie_admin')]);
         }
     }
+
+    protected $policies = [
+        Todo::class => TodoPolicy::class,
+        // Policyを登録
+    ];
 }

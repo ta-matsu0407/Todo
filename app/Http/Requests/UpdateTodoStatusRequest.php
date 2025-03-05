@@ -7,7 +7,7 @@ use App\Enums\Status;
 use Illuminate\Validation\Rules\Enum;
 
 
-class UpdateTodoUserRequest extends FormRequest
+class UpdateTodoStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,7 @@ class UpdateTodoUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'homework' => ['required', 'max:255'],
-            'deadline' => ['required', 'date'],
-            'memo' => ['max:255'],
+            'status' => ['required', new Enum(Status::class)], // Status Enumでバリデーション
         ];
     }
 }

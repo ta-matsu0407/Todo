@@ -18,7 +18,7 @@ const form = reactive({
 })
 
 const updateTodo = id => {
-    router.put(route('admin.todos.update', { todo: id}), form)
+router.put(route('admin.todos.update', { todo: id}), form)
 }
 
 </script>

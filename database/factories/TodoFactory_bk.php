@@ -22,7 +22,7 @@ class TodoFactory extends Factory
             'memo' => fake()->realText(50),
             'status' => fake()->numberBetween(0, 1),
             'deadline' => fake()->dateTimeThisYear(),
-
+            'created_by_type' => fake()->randomElement(['admin', 'user']), // ランダムに admin または user
         ];
     }
 }

@@ -1,7 +1,7 @@
 <script setup>
 import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { reactive, computed, watch} from 'vue'
+import { reactive, watch} from 'vue'
 import { router } from '@inertiajs/core';
 import { Core as YubinBangoCore } from "yubinbango-core2";
 
@@ -31,7 +31,7 @@ const fetchAddress = () => {
 }
 
 const updateUser = id => {
-    router.put(route('admin.users.update', { user: id}), form)
+router.put(route('admin.users.update', { user: id}), form)
 }
 
 // 郵便番号の長さをリアルタイムでチェック
@@ -59,6 +59,9 @@ watch(() => form.postcode, (newVal) => {
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
                             <form @submit.prevent="updateUser(form.id)">
+                                <!-- 更新ボタンを押したらsubmitが走り、formが走り、updateUserメソッドが走る -->
+                                <!-- submit.prevent：SPA、post通信を行った時にページの読み込みを防ぐ -->
+                                <!-- updateUser：scriptで設定したメソッドを実行 -->
                                 <div class="container px-5 py-8 mx-auto">
                                     <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                         <div class="flex flex-wrap -m-2">
@@ -123,6 +126,7 @@ watch(() => form.postcode, (newVal) => {
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
+                                                <!-- w-full:横幅いっぱい -->
                                                 <div class="relative">
                                                     <label for="memo" class="leading-7 text-sm text-gray-600">備考</label>
                                                     <textarea id="memo" name="memo" v-model="form.memo" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>

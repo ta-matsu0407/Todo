@@ -34,7 +34,10 @@ class StoreUserRequest extends FormRequest
             'birthday' => ['required', 'date'],
             'password' => ['required'],
             'memo' => ['max:1000'],
-            'gender' => ['required', new Enum(Gender::class)], // Gender Enumでバリデーション
+            'gender' => ['required', new Enum(Gender::class)],
+            // Gender Enumでバリデーション
+            // new を使って Enum クラスのインスタンスを作成
+            // Enum はクラスなので、オブジェクトとしてインスタンス化 しないと使えない。
         ];
     }
 }

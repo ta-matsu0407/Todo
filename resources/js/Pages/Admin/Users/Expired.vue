@@ -4,11 +4,18 @@ import AdminAuthenticatedLayout from '@/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import { router } from '@inertiajs/core';
-
+import CommonTable from '@/Components/Table.vue';
 
 defineProps({
     expiredUsers: Object,
 })
+
+const headers = [
+    { label: 'ID', key: 'id', class: 'w-1/10 rounded-tl rounded-bl' },
+    { label: '生徒名', key: 'name', class: 'w-1/5' },
+    { label: '削除した日', key: 'deleted_at', class: 'w-1/3' },
+    { label: '', key: 'actions', class: 'w-1/3' },
+];
 
 const deleteUser = id => {
     router.delete(route('admin.expired-users.destroy', {expiredUser: id}), {
@@ -35,26 +42,18 @@ const deleteUser = id => {
                             <div class="container px-5 py-8 mx-auto">
                                 <FlashMessage />
                                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-                                    <table class="table-auto w-full text-left whitespace-no-wrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl w-1/10">ID</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/5">生徒名</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/3">削除した日</th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-1/3"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="expiredUser in expiredUsers.data" :key="expiredUser.id">
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ expiredUser.id }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ expiredUser.name }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ expiredUser.deleted_at }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3 text-center">
-                                                    <button @click="deleteUser(expiredUser.id)" class="text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded text-sm">完全に削除する</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <CommonTable
+                                        :headers="headers"
+                                        :items="expiredUsers.data"
+                                    >
+                                        <template #actions="{ item }">
+                                            <td class="border-b-2 border-gray-200 px-4 py-3 text-center">
+                                                <button @click="deleteUser(item.id)" class="text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded text-sm">
+                                                    完全に削除する
+                                                </button>
+                                            </td>
+                                        </template>
+                                    </CommonTable>
                                 </div>
                             </div>
                             <Pagination class="mt-6" :links="expiredUsers.links"></Pagination>

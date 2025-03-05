@@ -41,6 +41,7 @@ class TodoController extends Controller
             'memo' => $request->memo,
             'status' => '1', // デフォルトで "未完了" に設定
             'deadline' => $request->deadline,
+            'created_by_type' => 'admin', // 固定
         ]);
 
         return to_route('admin.todos.index')
@@ -48,7 +49,11 @@ class TodoController extends Controller
             'message' => '登録しました。',
             'status' => 'success'
         ]);
-}
+    }
+
+    /**
+     * Display the specified resource.
+     */
     public function show(Todo $todo)
     {
         $todo->load('user');
@@ -58,6 +63,9 @@ class TodoController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Todo $todo)
     {
         $todo->load('user');

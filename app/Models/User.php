@@ -59,8 +59,7 @@ class User extends Authenticatable
         if (!empty($input)) {
             return $query->where('name', 'like', $input . '%');
         }
-
-        return $query;
+        return $query; // 入力がない場合はそのまま返す
     }
 
     public function todos()

@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'kana' => fake()->kanaName(),
             'tel' => $tel,
-            'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->safeEmail(),
             'email_verified_at' => now(),
             'postcode' => fake()->postcode(),
             'address' => $address,

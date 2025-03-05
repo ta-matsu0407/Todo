@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\User; //Eloquent
+use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+
     public static function middleware(): array
     {
         return [
@@ -30,6 +34,9 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         return Inertia::render('Admin/Users/Create');
@@ -54,9 +61,6 @@ class UserController extends Controller
             'user_id' => $user->id
         ])
 
-        // return Inertia::render('Admin/Users/Index', [
-        //     'users' => User::paginate(10)
-        // ])
         ->with([
             'message' => '登録しました。',
             'status' => 'success'
@@ -91,9 +95,6 @@ class UserController extends Controller
         $user->save();
 
         return to_route('admin.users.index')
-        // return Inertia::render('Admin/Users/Index', [
-        //     'users' => User::paginate(10)
-        // ])
         ->with([
             'message' => '更新しました。',
             'status' => 'success'
@@ -115,7 +116,6 @@ class UserController extends Controller
     {
         $expiredUsers = User::onlyTrashed()->paginate(10);
 
-        // onlyTrashedでソフトデリートしたもののみ取得
         return Inertia::render('Admin/Users/Expired', [
             'expiredUsers' => $expiredUsers
         ]);
@@ -124,6 +124,7 @@ class UserController extends Controller
     public function expiredUserDestroy($id)
     {
         $user = User::onlyTrashed()->findOrFail($id);
+        // findOrFail 一致するidが見つからなかった場合は、エラー404を返すa
 
         // 関連する todos も完全削除
         $user->todos()->forceDelete();
@@ -142,8 +143,6 @@ class UserController extends Controller
     {
         $fileName = 'users.csv';
 
-        $users = User::all();
-
         $headers = [
             "Content-Type" => "text/csv; charset=Shift_JIS",
             // Shift_JISを指定
@@ -152,7 +151,7 @@ class UserController extends Controller
             // ダウンロード時のファイル名を指定
         ];
 
-        $callback = function () use ($users) {
+        $callback = function () {
             $file = fopen('php://output', 'w');
 
             $header = [
@@ -171,25 +170,28 @@ class UserController extends Controller
             mb_convert_variables('SJIS-win', 'UTF-8', $header);
             fputcsv($file, $header);
 
-            foreach ($users as $user) {
-                $users_data = [
-                    $user->id,
-                    $user->name,
-                    $user->kana,
-                    // strval($user->tel),
-                    '"' . $user->tel . '"',
-                    $user->email,
-                    $user->postcode,
-                    $user->address,
-                    $user->birthday,
-                    $user->memo,
-                    $user->created_at,
-                ];
-                // 文字コード変換
-                mb_convert_variables('SJIS-win', 'UTF-8', $users_data);
+             // チャンクを使ってデータを分割取得
+            User::chunk(10000, function ($users) use ($file) {
+                foreach ($users as $user) {
+                    $users_data = [
+                        $user->id,
+                        $user->name,
+                        $user->kana,
+                         // 明示的に文字列化
+                        '"' . $user->tel . '"',
+                        $user->email,
+                        $user->postcode,
+                        $user->address,
+                        $user->birthday,
+                        $user->memo,
+                        $user->created_at,
+                    ];
+                    // 文字コード変換
+                    mb_convert_variables('SJIS-win', 'UTF-8', $users_data);
 
-                fputcsv($file, $users_data);
-            }
+                    fputcsv($file, $users_data);
+                }
+            });
             fclose($file);
         };
         return new StreamedResponse($callback, 200, $headers);

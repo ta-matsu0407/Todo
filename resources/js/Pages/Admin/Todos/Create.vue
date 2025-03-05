@@ -21,7 +21,6 @@ const storeTodo = () => {
     router.post('/admin/todos', form)
 }
 
-
 </script>
 
 <template>
