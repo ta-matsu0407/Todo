@@ -32,11 +32,8 @@ class UpdateUserRequest extends FormRequest
             'postcode' => ['required', 'max:7'],
             'address' => ['required', 'max:100'],
             'birthday' => ['required', 'date'],
-            // 'gender' => ['required'],
-            // 'password' => ['required'],
             'memo' => ['max:1000'],
             'gender' => ['required', new Enum(Gender::class)], // Gender Enumでバリデーション
-            // 'status' => ['required', new Enum(Status::class)], // Status Enumでバリデーション
         ];
     }
 }

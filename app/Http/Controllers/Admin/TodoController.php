@@ -21,10 +21,7 @@ class TodoController extends Controller
         $todos = Todo::with('user')
         ->searchTodos($request->search)
         ->paginate(10);
-        //　user_id から 関連する User の情報 を一緒に取得
-        // これにより、Vue 側で todo.user.name のように ユーザーの名前を表示できる
-        // dd($todos);
-        // logger($todos);
+
         return Inertia::render('Admin/Todos/Index', [
             'todos' => $todos
         ]);
@@ -39,7 +36,6 @@ class TodoController extends Controller
 
         return Inertia::render('Admin/Todos/Create', [
             'users' => $users
-        // 作成した変数をvue側に渡す
         ]);
     }
 
@@ -48,8 +44,6 @@ class TodoController extends Controller
      */
     public function store(StoreTodoRequest $request)
     {
-        // dd($request->all());
-        // データを保存
         Todo::create([
             'user_id' => $request->user_id,
             'homework' => $request->homework,
@@ -59,7 +53,6 @@ class TodoController extends Controller
             'created_by_type' => 'admin', // 固定
         ]);
 
-        // 一覧ページにリダイレクト
         return to_route('admin.todos.index')
         ->with([
             'message' => '登録しました。',
@@ -72,24 +65,12 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        // dd($todo);
         $todo->load('user');
 
         return Inertia::render('Admin/Todos/Show', [
             'todo' => $todo
         ]);
     }
-
-    // public function show($id)
-    // {
-
-    //     $todo = Todo::with('user')->findOrFail($id);
-
-    //     return Inertia::render('Admin/Todos/Show', [
-    //         'todo' => $todo
-    //     ]);
-    // }
-
 
     /**
      * Show the form for editing the specified resource.

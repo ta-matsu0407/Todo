@@ -7,7 +7,6 @@ use Inertia\Inertia;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoUserRequest;
 use App\Http\Requests\UpdateTodoStatusRequest;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -19,17 +18,13 @@ class UserTodoController extends Controller
      */
     public function index()
     {
-        // ログインユーザーのIDを取得
+    // ログインユーザーのIDを取得
     $userId = (int) Auth::user()->id;
 
-    // 自分のTodoリストを取得（最新順 & ページネーション)
-    // with('user') を使って user の情報も取得
     $todos = Todo::with('user')
                 ->where('user_id', $userId)
                 ->latest()
                 ->paginate(10);
-
-    // dd($todos->toArray());
 
         return Inertia::render('User/Todos/Index', [
             'todos' => $todos
@@ -51,8 +46,6 @@ class UserTodoController extends Controller
      */
     public function store(StoreTodoRequest $request)
     {
-        // dd($request->all());
-
         Todo::create([
             'user_id' => Auth::id(), // ログインしているユーザーのIDを保存
             'homework' => $request->homework,
@@ -73,7 +66,6 @@ class UserTodoController extends Controller
     {
         $this->authorize('view', $todo); // Policy による権限チェック
 
-        // dd($todo);
         $todo->load('user');
 
         return Inertia::render('User/Todos/Show', [
@@ -102,7 +94,6 @@ class UserTodoController extends Controller
             'message' => '更新しました。',
             'status' => 'success'
         ]);
-
     }
 
     public function destroy(Todo $todo)
@@ -116,9 +107,7 @@ class UserTodoController extends Controller
         ]);
     }
 
-
     // Todoのステータスを変更
-
     public function updateStatus(UpdateTodoStatusRequest $request, Todo $todo)
     {
         $todo->update([
@@ -131,5 +120,4 @@ class UserTodoController extends Controller
             'status' => 'success'
         ]);
     }
-
 }
